@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Form, SignupButton, BoxButtons, useStyles } from "./style";
 import clsx from 'clsx';
 import { signup } from '../../actions/user';
+import Header from "../Header/index";
 
 function SignupListenerPage(props) {
 
