@@ -110,7 +110,7 @@ function Header() {
         {["Adicionar Música", "Adicionar Gênero", "Adicionar Álmbum"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              <AddCircleOutlinedIcon/>
+              <AddCircleOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -208,17 +208,21 @@ function Header() {
                 </IconButton>
               </div>
             )}
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileUserMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          {
+            page && (
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileUserMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+
+              </div>
+            )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

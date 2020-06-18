@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
+import { Form, LoginButtom, Signbuttom, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
 import { signup } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../Router";
+
 
 function Login(props) {
 
@@ -42,13 +43,21 @@ function Login(props) {
     signup(input);
   }
 
-  const goToSignup = () => {
+  const goToSignupListener = () => {
     history.push(routes.SingupListenerPage);
+  }
+
+  const goToSignupListenerPremium = () => {
+    history.push(routes.SingupListenerPremiumPage)
+  }
+
+  const goToSignupBand = () => {
+    history.push(routes.SignupBandPage)
   }
 
   return (
     <ContainerWrapper maxWidth={false}>
-      <Header/>
+      <Header />
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="name">Nome</InputLabel>
@@ -102,17 +111,33 @@ function Login(props) {
           <FormHelperText id="password">Digite uma senha com no mínimo 6 dígitos.</FormHelperText>
         </FormControl>
         <BoxButtons>
-          <SignupButton variant="contained" color="primary" type="submit">Entrar</SignupButton>
-          <SignupButton 
-          variant="contained" 
-          color="default" 
-          type="submit"
-          onClick={goToSignup}
-          >
-            Cadastrar-se
-          </SignupButton>
+          <LoginButtom variant="contained" color="primary" type="submit">Entrar</LoginButtom>
         </BoxButtons>
       </Form>
+      <BoxButtons>
+        <Signbuttom
+          variant="contained"
+          color="default"
+          onClick={goToSignupListener}
+        >
+          Criar conta gratuita
+          </Signbuttom>
+        <Signbuttom
+          variant="contained"
+          color="secondary"
+          onClick={goToSignupListenerPremium}
+        >
+          Criar conta premium
+          </Signbuttom>
+        <Signbuttom
+          variant="contained"
+          color="primary"
+          onClick={goToSignupBand}
+        >
+          Criar conta para banda
+          </Signbuttom>
+      </BoxButtons>
+
     </ContainerWrapper>
   )
 
