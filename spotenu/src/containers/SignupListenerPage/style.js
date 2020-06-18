@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Box } from "@material-ui/core";
+import { Button, Box, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 
@@ -13,6 +13,14 @@ export const Form = styled.form`
     width: 90%;
   }
 `
+
+export const ContainerWrapper = withStyles({
+  root: {
+    width: "100%",
+    padding: 0,
+    margin: 0,
+  }
+})(Container)
 
 export const BoxButtons = withStyles({
   root: {

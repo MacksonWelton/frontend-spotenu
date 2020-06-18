@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, LoginButtom, Signbuttom, BoxButtons, useStyles, ContainerWrapper } from "./style";
+import { Form, LoginButtom, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
-import { signup } from '../../actions/user';
+import { login } from '../../actions/user';
 import Header from "../../components/Header/index";
-import { useHistory } from "react-router-dom";
-import { routes } from "../Router";
+import LoginPageSignupButtons from "../../components/LoginPageSignupButtons";
 
 
 function Login(props) {
 
   const classes = useStyles();
-  let history = useHistory();
 
   const [input, setInput] = useState({
     name: "",
@@ -40,19 +38,7 @@ function Login(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    signup(input);
-  }
-
-  const goToSignupListener = () => {
-    history.push(routes.SingupListenerPage);
-  }
-
-  const goToSignupListenerPremium = () => {
-    history.push(routes.SingupListenerPremiumPage)
-  }
-
-  const goToSignupBand = () => {
-    history.push(routes.SignupBandPage)
+    login(input);
   }
 
   return (
@@ -114,30 +100,7 @@ function Login(props) {
           <LoginButtom variant="contained" color="primary" type="submit">Entrar</LoginButtom>
         </BoxButtons>
       </Form>
-      <BoxButtons>
-        <Signbuttom
-          variant="contained"
-          color="default"
-          onClick={goToSignupListener}
-        >
-          Criar conta gratuita
-          </Signbuttom>
-        <Signbuttom
-          variant="contained"
-          color="secondary"
-          onClick={goToSignupListenerPremium}
-        >
-          Criar conta premium
-          </Signbuttom>
-        <Signbuttom
-          variant="contained"
-          color="primary"
-          onClick={goToSignupBand}
-        >
-          Criar conta para banda
-          </Signbuttom>
-      </BoxButtons>
-
+      <LoginPageSignupButtons/>
     </ContainerWrapper>
   )
 

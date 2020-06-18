@@ -33,13 +33,6 @@ export const BoxButtons = withStyles({
 
 })(Box)
 
-export const Signbuttom = withStyles({
-  root: {
-    width: "250px",
-    marginBottom: "10PX"
-  }
-})(Button)
-
 export const LoginButtom = withStyles({
   root: {
     width: "200px"

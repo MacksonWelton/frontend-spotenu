@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Container, IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
+import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, SignupButton, BoxButtons, useStyles } from "./style";
+import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
 import { signup } from '../../actions/user';
 import Header from "../../components/Header/index";
+import { useHistory } from "react-router-dom";
+import { routes } from "../../containers/Router";
 
 function SignupListenerPage(props) {
 
   const classes = useStyles();
+  let history = useHistory();
 
   const [input, setInput] = useState({
     name: "",
@@ -40,8 +43,12 @@ function SignupListenerPage(props) {
     signup(input);
   }
 
+  const goToLoginPage = () => {
+    history.push(routes.LoginPage)
+  }
+
   return (
-    <Container>
+    <ContainerWrapper maxWidth={false}>
       <Header/>
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -110,10 +117,10 @@ function SignupListenerPage(props) {
         </FormControl>
         <BoxButtons>
           <SignupButton variant="contained" color="primary" type="submit">Cadastrar</SignupButton>
-          <SignupButton variant="contained" color="secondary" type="submit">Fazer Login</SignupButton>
+          <SignupButton variant="contained" color="default" onClick={goToLoginPage}>Fazer Login</SignupButton>
         </BoxButtons>
       </Form>
-    </Container>
+    </ContainerWrapper>
   )
 
 }
