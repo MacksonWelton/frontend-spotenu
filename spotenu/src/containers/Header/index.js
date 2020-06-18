@@ -12,13 +12,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
-
-import { useStyles } from "./style";
-import { useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom';
-import { routes } from "../Router";
-
-import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -27,6 +20,16 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import clsx from "clsx";
+import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import { routes } from "../Router";
+
+import { useStyles } from "./style";
+
+
+
+
 
 function Header() {
   const page = useSelector((state) => state.router.location.pathname) === "/signup-listener";
