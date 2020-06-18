@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Container, IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
+import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, SignupButton, BoxButtons, useStyles } from "./style";
+import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
 import { signup } from '../../actions/user';
 import Header from "../../components/Header/index";
+import { useHistory } from "react-router-dom";
+import { routes } from "../Router";
 
-function SignupListenerPage(props) {
+function Login(props) {
 
   const classes = useStyles();
+  let history = useHistory();
 
   const [input, setInput] = useState({
     name: "",
-    nickname: "",
     email: "",
     password: ""
   })
@@ -40,8 +42,12 @@ function SignupListenerPage(props) {
     signup(input);
   }
 
+  const goToSignup = () => {
+    history.push(routes.SingupListenerPage);
+  }
+
   return (
-    <Container>
+    <ContainerWrapper maxWidth={false}>
       <Header/>
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -54,19 +60,6 @@ function SignupListenerPage(props) {
             required
             onChange={handleChangeInput}
             value={input.name}
-            variant="outlined"
-          />
-        </FormControl>
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="nickname">Apelido</InputLabel>
-          <OutlinedInput
-            id="nickname"
-            name="nickname"
-            label="Apelido"
-            type="text"
-            onChange={handleChangeInput}
-            value={input.nickname}
-            required
             variant="outlined"
           />
         </FormControl>
@@ -109,14 +102,21 @@ function SignupListenerPage(props) {
           <FormHelperText id="password">Digite uma senha com no mínimo 6 dígitos.</FormHelperText>
         </FormControl>
         <BoxButtons>
-          <SignupButton variant="contained" color="primary" type="submit">Cadastrar</SignupButton>
-          <SignupButton variant="contained" color="secondary" type="submit">Fazer Login</SignupButton>
+          <SignupButton variant="contained" color="primary" type="submit">Entrar</SignupButton>
+          <SignupButton 
+          variant="contained" 
+          color="default" 
+          type="submit"
+          onClick={goToSignup}
+          >
+            Cadastrar-se
+          </SignupButton>
         </BoxButtons>
       </Form>
-    </Container>
+    </ContainerWrapper>
   )
 
 }
 
 
-export default SignupListenerPage;
+export default Login;

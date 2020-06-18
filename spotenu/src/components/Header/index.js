@@ -23,13 +23,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { routes } from "../Router";
+import { routes } from "../../containers/Router";
 
 import { useStyles } from "./style";
-
-
-
-
 
 function Header() {
   const page = useSelector((state) => state.router.location.pathname).includes("/user/");
