@@ -32,7 +32,7 @@ import { useStyles } from "./style";
 
 
 function Header() {
-  const page = useSelector((state) => state.router.location.pathname) === "/signup-listener";
+  const page = useSelector((state) => state.router.location.pathname).includes("/user/");
   let history = useHistory();
 
   function handleClick() {
