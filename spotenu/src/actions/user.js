@@ -24,10 +24,11 @@ export const signupBand = async (input)  => {
 }
 
 export const signupAdm = async (input) => {
+  const token = window.localStorage.getItem(token)
   try {
     const response = await axios.post(`${baseUrl}/signup-adm`, input, {
       header: {
-        token: input.token
+        token: token
       }
     });
     window.localStorage.setItem("token", response.data);
