@@ -4,13 +4,15 @@ import HomePage from "../HomePage";
 import SingupListenerPage from "../SignupListenerPage";
 import LoginPage from "../LoginPage";
 import SignupBandPage from "../SignupBandPage";
+import SignupAdmPage from "../SignupAdmPage";
 
 export const routes = {
   homePage: "/",
   SingupListenerPage: "/signup-listener",
   LoginPage: "/login",
   SignupListenerPremiumPage: "/signup-listener-premium",
-  SignupBandPage: "/signup-band"
+  SignupBandPage: "/signup-band",
+  SignupAdmPage: "/signup-adm"
 };
 
 export const Router = () => {
@@ -22,6 +24,7 @@ export const Router = () => {
         <Route exact path={routes.SingupListenerPage} component={SingupListenerPage} />
         <Route exact path={routes.SignupListenerPremiumPage} />
         <Route exact path={routes.SignupBandPage} component={SignupBandPage} />
+        <Route exact path={routes.SignupAdmPage} component={SignupAdmPage} />
       </Switch>
     </BrowserRouter>
   );
