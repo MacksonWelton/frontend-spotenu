@@ -3,6 +3,7 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import HomePage from "../HomePage";
 import SingupListenerPage from "../SignupListenerPage";
 import LoginPage from "../LoginPage";
+import SignupBandPage from "../SignupBandPage";
 
 export const routes = {
   homePage: "/",
@@ -20,7 +21,7 @@ export const Router = () => {
         <Route exact path={routes.LoginPage} component={LoginPage} />
         <Route exact path={routes.SingupListenerPage} component={SingupListenerPage} />
         <Route exact path={routes.SignupListenerPremiumPage} />
-        <Route exact path={routes.SignupBandPage} />
+        <Route exact path={routes.SignupBandPage} component={SignupBandPage} />
       </Switch>
     </BrowserRouter>
   );

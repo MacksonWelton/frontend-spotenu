@@ -2,13 +2,13 @@ import ReactDOM from "react-dom";
 import React from "react";
 import { createBrowserHistory } from "history";
 import { createStore, applyMiddleware } from "redux";
+import {JssProvider} from "react-jss";
 import {
   MuiThemeProvider,
   createGenerateClassName,
   jssPreset,
   CssBaseline
 } from "@material-ui/core";
-import {JssProvider} from "react-jss";
 import { create } from "jss";
 import theme from "./style/theme";
 import { routerMiddleware } from "connected-react-router";
@@ -19,10 +19,13 @@ import { Router } from "./containers/Router";
 const history = createBrowserHistory();
 
 const generateClassName = createGenerateClassName();
+
 const jss = create({
   ...jssPreset(),
-  insertionPoint: document.getElementById("jss-insertion-point")
+  insertionPoint: document.getElementById("jss-insertion-point"),
 });
+
+jss.options.createGenerateClassName = generateClassName;
 
 const store = createStore(
   generateReducers(history),
@@ -46,8 +49,6 @@ const ConnectedApp = App;
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedApp />
-  </Provider>,
+    <ConnectedApp />,
   rootElement
 );

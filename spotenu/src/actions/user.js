@@ -13,6 +13,17 @@ export const signup = async (input)  => {
   }
 }
 
+export const signupBand = async (input)  => {
+  try {
+    console.log(input)
+     const response = await axios.post(`${baseUrl}/signup-band`, input);
+     window.localStorage.setItem("token", response.data);
+
+  } catch(err) {
+    console.error(err.message)
+  }
+}
+
 export const login = async (input)  => {
   try {
 
