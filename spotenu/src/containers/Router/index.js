@@ -10,7 +10,7 @@ export const routes = {
   SingupListenerPage: "/signup-listener",
   LoginPage: "/login",
   SignupListenerPremiumPage: "/signup-listener-premium",
-  SignupBandPage: "/band-signup"
+  SignupBandPage: "/signup-band"
 };
 
 export const Router = () => {
