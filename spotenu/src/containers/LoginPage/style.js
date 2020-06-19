@@ -3,6 +3,7 @@ import { Button, Box, Container } from "@material-ui/core";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -25,21 +26,14 @@ export const ContainerWrapper = withStyles({
 export const BoxButtons = withStyles({
   root: {
     display: "flex",
-    justifyContent: "space-around",
+    flexDirection: "column",
+    alignItems: "center",
     margin: "10px 0px",
-    flexWrap: 'wrap'
   }
 
 })(Box)
 
-export const SignupButton = withStyles({
-  root: {
-    width: "200px",
-    marginBottom: "10PX"
-  }
-})(Button)
-
-export const LoginButton = withStyles({
+export const LoginButtom = withStyles({
   root: {
     width: "200px"
   }

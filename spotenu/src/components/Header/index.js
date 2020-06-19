@@ -23,13 +23,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { routes } from "../Router";
+import { routes } from "../../containers/Router";
 
 import { useStyles } from "./style";
-
-
-
-
 
 function Header() {
   const page = useSelector((state) => state.router.location.pathname).includes("/user/");
@@ -114,7 +110,7 @@ function Header() {
         {["Adicionar Música", "Adicionar Gênero", "Adicionar Álmbum"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              <AddCircleOutlinedIcon/>
+              <AddCircleOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -212,17 +208,21 @@ function Header() {
                 </IconButton>
               </div>
             )}
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileUserMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          {
+            page && (
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileUserMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+
+              </div>
+            )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
