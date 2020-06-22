@@ -38,6 +38,18 @@ export const signupAdm = async (input) => {
  }
 }
 
+export const signupPremiumListener = async (input)  => {
+  try {
+     const response = await axios.post(`${baseUrl}/signup-premium-listener`, input);
+     window.localStorage.setItem("token", response.data);
+
+  } catch(err) {
+    console.error(err.message)
+  }
+}
+
+
+
 export const login = async (input)  => {
   try {
 
