@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
         pathname: "/login",
         from: location
     });
-    console.log(token)
+    
     return (
         <Route
             {...rest}
