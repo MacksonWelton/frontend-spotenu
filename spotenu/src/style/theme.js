@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
+import { ptBR } from "@material-ui/core/locale";
 
 export default createMuiTheme({
   "palette": {
@@ -36,4 +37,4 @@ export default createMuiTheme({
       "white": "rgba(255, 255, 255, 1)"
     }
   }
-})
+}, ptBR)

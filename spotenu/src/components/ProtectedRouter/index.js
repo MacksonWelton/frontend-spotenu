@@ -2,11 +2,12 @@ import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const token = localStorage.getItem('token');
+    const token = true;
     const getRedirectProps = (location) => ({
         pathname: "/login",
         from: location
     });
+    console.log(token)
     return (
         <Route
             {...rest}

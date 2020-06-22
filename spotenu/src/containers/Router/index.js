@@ -6,8 +6,8 @@ import LoginPage from "../LoginPage";
 import SignupBandPage from "../SignupBandPage";
 import SignupAdmPage from "../SignupAdmPage";
 import SignupPremiumListenerPage from "../SignupPremiumListenerPage";
-
-import ProtectedRouter from "../../components/ProtectedRouter";
+import AllBandsPage from "../../containers/AllBandsPage";
+import {ProtectedRoute }from "../../components/ProtectedRouter";
 
 export const routes = {
   homePage: "/",
@@ -31,7 +31,7 @@ export const Router = () => {
         <Route exact path={routes.SignupAdmPage} component={SignupAdmPage} />
 
         // Rotas protegidas
-        <ProtectedRouter exact path={routes.AllBandsPage} component={} />
+        <ProtectedRoute exact path={routes.AllBandsPage} component={AllBandsPage} />
       </Switch>
     </BrowserRouter>
   );

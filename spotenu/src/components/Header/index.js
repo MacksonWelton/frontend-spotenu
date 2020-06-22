@@ -98,17 +98,17 @@ const Header = () => {
     >
       {page === true ?
         (
-          <>
+          <div>
             <MenuItem onClick={handleUserMenuClose}>Ver Perfil</MenuItem>
             <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
             <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
-          </>
+          </div>
         )
         :
         (
-          <>
+          <div>
             <MenuItem onClick={goToLoginPage}>Entrar</MenuItem>
-          </>
+          </div>
         )
       }
     </Menu>
@@ -160,7 +160,7 @@ const Header = () => {
     >
       {page === true ?
         (
-          <>
+          <div>
             <MenuItem onClick={handleUserMenuClose}>
               <IconButton
                 aria-label="account of current user"
@@ -174,11 +174,11 @@ const Header = () => {
             </MenuItem>
             <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
             <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
-          </>
+          </div>
         )
         :
         (
-          <>
+          <div>
             <MenuItem onClick={goToLoginPage}>
             <IconButton
                 aria-label="account of current user"
@@ -190,7 +190,7 @@ const Header = () => {
               </IconButton>
               <p>Entrar</p>
               </MenuItem>
-          </>
+          </div>
         )
       }
     </Menu>
