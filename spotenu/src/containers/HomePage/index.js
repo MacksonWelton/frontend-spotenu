@@ -12,8 +12,8 @@ const HomePage = () => {
   const classes = useStyles();
 
 
-  const goToLoginListenerPage = () => {
-    history.push(routes.SignupListenerPremiumPage)
+  const goToSignupPremiumListenerPage = () => {
+    history.push(routes.SignupPremiumListenerPage)
   }
 
   const goToSignupListenerPage = () => {
@@ -34,7 +34,7 @@ const HomePage = () => {
               <Typography variant="h4">
                 Ouça sua música favorita gratuitamente.
               </Typography>
-              <Typography variant="h7">
+              <Typography variant="h6">
                 São milhares de músicas para você curtir.
           </Typography>
               <BoxButtons>
@@ -47,11 +47,11 @@ const HomePage = () => {
               <Typography variant="h4">
                 Ouça sua música favorita sem interrupções.
           </Typography>
-              <Typography variant="h7">
+              <Typography variant="h6">
                 Assine agora mesmo nosso plano prêmio e tenha acesso a recursos ilimitados.
           </Typography>
               <BoxButtons>
-                <SignupButton onClick={goToLoginListenerPage} variant="contained" color="secondary" type="submit">Assinar</SignupButton>
+                <SignupButton onClick={goToSignupPremiumListenerPage} variant="contained" color="secondary" type="submit">Assinar</SignupButton>
               </BoxButtons>
             </div>
           </Grid>
@@ -60,7 +60,7 @@ const HomePage = () => {
               <Typography variant="h4">
                 Seus fãs e futuros fãs aguardam por você ou sua banda.
           </Typography>
-              <Typography variant="h7">
+              <Typography variant="h6">
                 Alcance milhares de ouvintes em todo o mundo, faça seu cadastro ou da sua banda agora mesmo.
           </Typography>
               <BoxButtons>
