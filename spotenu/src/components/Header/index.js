@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
+import InputOutlinedIcon from '@material-ui/icons/InputOutlined';
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -27,12 +28,16 @@ import { routes } from "../../containers/Router";
 
 import { useStyles } from "./style";
 
-function Header() {
-  const page = useSelector((state) => state.router.location.pathname).includes("/user/");
+const Header = () => {
+  const page = useSelector((state) => state.router.location.pathname).includes("/user");
   let history = useHistory();
 
   function handleClick() {
     history.push(routes.homePage);
+  }
+
+  function goToLoginPage() {
+    history.push(routes.LoginPage);
   }
 
   const classes = useStyles();
@@ -91,9 +96,21 @@ function Header() {
       open={isUserMenuOpen}
       onClose={handleUserMenuClose}
     >
-      <MenuItem onClick={handleUserMenuClose}>Ver Perfil</MenuItem>
-      <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
-      <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
+      {page === true ?
+        (
+          <>
+            <MenuItem onClick={handleUserMenuClose}>Ver Perfil</MenuItem>
+            <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
+            <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
+          </>
+        )
+        :
+        (
+          <>
+            <MenuItem onClick={goToLoginPage}>Entrar</MenuItem>
+          </>
+        )
+      }
     </Menu>
   );
 
@@ -141,17 +158,41 @@ function Header() {
       open={isMobileUserMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleUserMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Perfil</p>
-      </MenuItem>
+      {page === true ?
+        (
+          <>
+            <MenuItem onClick={handleUserMenuClose}>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <p>Ver Perfil</p>
+            </MenuItem>
+            <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
+            <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
+          </>
+        )
+        :
+        (
+          <>
+            <MenuItem onClick={goToLoginPage}>
+            <IconButton
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <InputOutlinedIcon />
+              </IconButton>
+              <p>Entrar</p>
+              </MenuItem>
+          </>
+        )
+      }
     </Menu>
   );
 
@@ -193,36 +234,30 @@ function Header() {
               </div>
             )}
           <div className={classes.grow} />
-          {
-            page && (
-              <div className={classes.sectionDesktop}>
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  color="inherit"
-                  onClick={handleUserMenuOpen}
-                >
-                  <AccountCircle />
-                </IconButton>
-              </div>
-            )}
-          {
-            page && (
-              <div className={classes.sectionMobile}>
-                <IconButton
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileUserMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
+          <div className={classes.sectionDesktop}>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleUserMenuOpen}
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileUserMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
 
-              </div>
-            )}
+          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
