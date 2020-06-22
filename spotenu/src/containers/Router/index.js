@@ -7,13 +7,16 @@ import SignupBandPage from "../SignupBandPage";
 import SignupAdmPage from "../SignupAdmPage";
 import SignupPremiumListenerPage from "../SignupPremiumListenerPage";
 
+import ProtectedRouter from "../../components/ProtectedRouter";
+
 export const routes = {
   homePage: "/",
   SingupListenerPage: "/signup-listener",
   LoginPage: "/login",
   SignupPremiumListenerPage: "/signup-listener-premium",
   SignupBandPage: "/signup-band",
-  SignupAdmPage: "/signup-adm"
+  SignupAdmPage: "/signup-adm",
+  AllBandsPage: "/all-bands"
 };
 
 export const Router = () => {
@@ -26,6 +29,9 @@ export const Router = () => {
         <Route exact path={routes.SignupPremiumListenerPage} component={SignupPremiumListenerPage}/>
         <Route exact path={routes.SignupBandPage} component={SignupBandPage} />
         <Route exact path={routes.SignupAdmPage} component={SignupAdmPage} />
+
+        // Rotas protegidas
+        <ProtectedRouter exact path={routes.AllBandsPage} component={} />
       </Switch>
     </BrowserRouter>
   );
