@@ -29,7 +29,7 @@ import { routes } from "../../containers/Router";
 import { useStyles } from "./style";
 
 const Header = () => {
-  const page = useSelector((state) => state.router.location.pathname).includes("/user");
+  const page = useSelector((state) => state.router.location.pathname).includes("/");
   let history = useHistory();
 
   function handleClick() {
@@ -38,6 +38,18 @@ const Header = () => {
 
   function goToLoginPage() {
     history.push(routes.LoginPage);
+  }
+
+  function goToAddMusicPage() {
+    history.push();
+  }
+
+  function goToAddMusicGenre() {
+    history.push(routes.AddMusicGenrePage);
+  }
+
+  function goToAddMusicAlbum() {
+    history.push(3);
   }
 
   const classes = useStyles();
@@ -124,14 +136,26 @@ const Header = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Adicionar Música", "Adicionar Gênero", "Adicionar Álmbum"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              <AddCircleOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {[
+          {
+            title: "Adicionar Música",
+            page: goToAddMusicPage
+          },
+          {
+            title: "Adicionar Gênero",
+            page: goToAddMusicGenre
+          },
+          {
+            title: "Adicionar Álbum",
+            page: goToAddMusicAlbum
+          }].map((text, index) => (
+            <ListItem button key={text.title} onClick={text.page}>
+              <ListItemIcon>
+                <AddCircleOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={text.title} />
+            </ListItem>
+          ))}
       </List>
       <Divider />
       <List>
@@ -180,7 +204,7 @@ const Header = () => {
         (
           <div>
             <MenuItem onClick={goToLoginPage}>
-            <IconButton
+              <IconButton
                 aria-label="account of current user"
                 aria-controls="primary-search-account-menu"
                 aria-haspopup="true"
@@ -189,7 +213,7 @@ const Header = () => {
                 <InputOutlinedIcon />
               </IconButton>
               <p>Entrar</p>
-              </MenuItem>
+            </MenuItem>
           </div>
         )
       }
