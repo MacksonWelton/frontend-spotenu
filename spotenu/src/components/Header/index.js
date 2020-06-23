@@ -45,11 +45,12 @@ const Header = () => {
   }
 
   function goToAddMusicGenre() {
-    history.push(routes.AddMusicGenrePage);
+    console.log(12)
+    history.push(routes.MusicGenrePage);
   }
 
   function goToAddMusicAlbum() {
-    history.push(3);
+    history.push(routes.AlbumsPage);
   }
 
   const classes = useStyles();
