@@ -23,3 +23,11 @@ export const AddMusicAlbum = async (input)  => {
     console.error(err.message)
   }
 }
+
+export const addMusic = async (input) => {
+  try {
+
+  } catch(err) {
+    console.error(err.message)
+  }
+}
