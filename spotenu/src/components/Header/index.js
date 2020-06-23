@@ -40,16 +40,15 @@ const Header = () => {
     history.push(routes.LoginPage);
   }
 
-  function goToAddMusicPage() {
-    history.push();
+  function goToMusicPage() {
+    history.push(routes.MusicsPage);
   }
 
-  function goToAddMusicGenre() {
-    console.log(12)
+  function goToMusicGenrePage() {
     history.push(routes.MusicGenrePage);
   }
 
-  function goToAddMusicAlbum() {
+  function goToMusicAlbumPage() {
     history.push(routes.AlbumsPage);
   }
 
@@ -140,15 +139,15 @@ const Header = () => {
         {[
           {
             title: "Adicionar Música",
-            page: goToAddMusicPage
+            page: goToMusicPage
           },
           {
             title: "Adicionar Gênero",
-            page: goToAddMusicGenre
+            page: goToMusicGenrePage
           },
           {
             title: "Adicionar Álbum",
-            page: goToAddMusicAlbum
+            page: goToMusicAlbumPage
           }].map((text, index) => (
             <ListItem button key={text.title} onClick={text.page}>
               <ListItemIcon>
