@@ -48,7 +48,7 @@ const MusicGenrePage = () => {
       name="genre"
       label="Gênero"
       />
-      <EnhancedTableHead rows={rows} headCells={headCells}/>
+      <EnhancedTableHead rows={rows} headCells={headCells} title="Gêneros"/>
     </Container>
   )
 }
