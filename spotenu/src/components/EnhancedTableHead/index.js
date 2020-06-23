@@ -18,10 +18,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { Button } from "@material-ui/core";
-
-
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -49,16 +45,8 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Nome' },
-  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-  { id: 'nickname', numeric: true, disablePadding: false, label: 'Nickname' },
-  { id: 'approved', numeric: true, disablePadding: false, label: 'Aprovado' },
-  { id: 'button', numeric: true, disablePadding: false, label: 'Aprovar' }
-];
-
-function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+function EnhancedTableHeadHead(props) {
+  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -100,7 +88,7 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
+EnhancedTableHeadHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
@@ -112,9 +100,9 @@ EnhancedTableHead.propTypes = {
 
 
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableHeadToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, title } = props;
 
   return (
     <Toolbar
@@ -128,7 +116,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Todas as Bandas
+            {title}
           </Typography>
         )}
 
@@ -149,11 +137,11 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
+EnhancedTableHeadToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = (props) => {
+const EnhancedTableHead = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
@@ -161,7 +149,7 @@ const EnhancedTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const rows = props.rows;
+  const {rows, headCells, title} = props;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -207,7 +195,7 @@ const EnhancedTable = (props) => {
     setPage(0);
   };
 
-  const toApprove = (id) => {
+  const remove = (id) => {
     console.log(id)
   }
 
@@ -219,14 +207,14 @@ const EnhancedTable = (props) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableHeadToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <EnhancedTableHeadHead
               classes={classes}
               numSelected={selected.length}
               order={order}
@@ -234,6 +222,7 @@ const EnhancedTable = (props) => {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              headCells={headCells}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -257,17 +246,12 @@ const EnhancedTable = (props) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="center">{row.email}</TableCell>
-                      <TableCell align="center">{row.nickname}</TableCell>
-                      <TableCell align="center">{row.approved}</TableCell>
-                      <TableCell align="center">
-                        <Button color="primary" onClick={() => toApprove(index)}>
-                          {row.button}
-                        </Button>
-                        </TableCell>
+
+                        {
+                        headCells.map((item, i) => (
+                          <TableCell key={i} align="center">{row[Object.keys(row)[i]]}</TableCell>
+                        ))
+                      }
                     </TableRow>
                   );
                 })}
@@ -293,4 +277,4 @@ const EnhancedTable = (props) => {
   );
 }
 
-export default EnhancedTable;
+export default EnhancedTableHead;

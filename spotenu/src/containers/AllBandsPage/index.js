@@ -7,6 +7,14 @@ import { useStyles } from "./style";
 const AllBandsPage = () => {
   const classes = useStyles();
 
+  const headCells = [
+    { id: 'name', numeric: true, disablePadding: true, label: 'Nome' },
+    { id: 'email', numeric: true, disablePadding: false, label: 'Gênero' },
+    { id: 'nickname', numeric: true, disablePadding: false, label: 'Banda' },
+    { id: 'approved', numeric: true, disablePadding: false, label: 'Aprovado' },
+    { id: 'approve', numeric: true, disablePadding: false, label: 'Aprovar' }
+  ];
+
   function createData(name, email, nickname, approved, button) {
     return { name, email, nickname, approved, button };
   }
@@ -19,7 +27,7 @@ const AllBandsPage = () => {
   return (
     <Container className={classes.root} maxWidth={false}>
       <Header/>
-      <EnchancedTableHead rows={rows}/>
+      <EnchancedTableHead rows={rows} headCells={headCells}/>
     </Container>
   )
 }
