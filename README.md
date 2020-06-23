@@ -1,2 +1,2 @@
 # frontend-spotenu
-Labenu's final bootcamp project.
+Final Labenu bootcamp project.
