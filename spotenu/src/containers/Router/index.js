@@ -9,6 +9,7 @@ import SignupPremiumListenerPage from "../SignupPremiumListenerPage";
 import AllBandsPage from "../../containers/AllBandsPage";
 import {ProtectedRoute }from "../../components/ProtectedRouter";
 import MusicGenrePage from "../MusicGenrePage";
+import AlbumsPage from "../AlbumsPage";
 
 export const routes = {
   homePage: "/",
@@ -18,7 +19,8 @@ export const routes = {
   SignupBandPage: "/signup-band",
   SignupAdmPage: "/signup-adm",
   AllBandsPage: "/all-bands",
-  MusicGenrePage: "/add-music-genre"
+  MusicGenrePage: "/add-music-genre",
+  AlbumsPage: "/albums"
 };
 
 export const Router = () => {
@@ -34,6 +36,7 @@ export const Router = () => {
 
         <ProtectedRoute exact path={routes.AllBandsPage} component={AllBandsPage} />
         <ProtectedRoute exact path={routes.MusicGenrePage} component={MusicGenrePage}/>
+        <ProtectedRoute exact path={routes.AlbumsPage} component={AlbumsPage}/>
       </Switch>
     </BrowserRouter>
   );
