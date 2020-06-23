@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { InputLabel, FormControl, OutlinedInput, TextField, MenuItem, Button, Container, Box } from "@material-ui/core";
-import { useStyles} from "./style";
+import { useStyles } from "./style";
 import clsx from 'clsx';
 import Header from "../../components/Header/index";
+import { addMusic } from "../../actions/music";
 
 
 function MusicsPage(props) {
@@ -13,9 +14,9 @@ function MusicsPage(props) {
     name: "",
     album: "",
     albums: [
-      {label: "1", value: "Item 1"},
-      {label: "2", value: "Item2"}
-  ]
+      { label: "1", value: "Item 1" },
+      { label: "2", value: "Item2" }
+    ]
   })
 
   const handleChangeInput = event => {
@@ -23,10 +24,9 @@ function MusicsPage(props) {
     setInput({ ...input, [name]: value })
   }
 
-
   const handleSubmit = event => {
     event.preventDefault();
-    // login(input);
+    addMusic(input);
   }
 
   return (
@@ -48,21 +48,21 @@ function MusicsPage(props) {
         </FormControl>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <TextField
-          id="outlined-select-currency"
-          select
-          name="album"
-          label="Álbum"
-          value={input.album}
-          onChange={handleChangeInput}
-          helperText="Selecione um álbum "
-          variant="outlined"
-        >
-          {input.albums.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+            id="outlined-select-currency"
+            select
+            name="album"
+            label="Álbum"
+            value={input.album}
+            onChange={handleChangeInput}
+            helperText="Selecione um álbum "
+            variant="outlined"
+          >
+            {input.albums.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </FormControl>
         <Box className={classes.box}>
           <Button className={classes.submitButton} variant="contained" color="primary" type="submit">Adicionar</Button>
