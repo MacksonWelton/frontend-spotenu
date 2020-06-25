@@ -8,16 +8,16 @@ const LoginPageSignupButtons = () => {
 
   let history = useHistory();
 
-  const goToSignupListener = () => {
-    history.push(routes.SingupListenerPage);
+  const goTolistenerSignupPage = () => {
+    history.push(routes.ListenerSignupPage);
   }
 
-  const goToSignupListenerPremium = () => {
-    history.push(routes.SignupListenerPremiumPage)
+  const goTopremiumListenerSignupPage = () => {
+    history.push(routes.PremiumListenerSignupPage)
   }
 
-  const goToSignupBand = () => {
-    history.push(routes.SignupBandPage)
+  const goTobandSignupPage= () => {
+    history.push(routes.BandSignupPage)
   }
 
   return (
@@ -25,21 +25,21 @@ const LoginPageSignupButtons = () => {
       <SignupButtom
         variant="contained"
         color="default"
-        onClick={goToSignupListener}
+        onClick={goTolistenerSignupPage}
       >
         Criar conta gratuita
       </SignupButtom>
       <SignupButtom
         variant="contained"
-        color="secondary"
-        onClick={goToSignupListenerPremium}
+        color="default"
+        onClick={goTopremiumListenerSignupPage}
       >
         Criar conta premium
       </SignupButtom>
       <SignupButtom
         variant="contained"
-        color="primary"
-        onClick={goToSignupBand}
+        color="default"
+        onClick={goTobandSignupPage}
       >
         Criar conta para banda
       </SignupButtom>

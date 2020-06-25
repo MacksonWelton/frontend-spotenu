@@ -3,12 +3,12 @@ import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, For
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
-import { signupBand } from '../../actions/user';
+import { signupAdm } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
 
-function SignupBandPage(props) {
+function AdmSignupPage(props) {
 
   const classes = useStyles();
   let history = useHistory();
@@ -17,7 +17,6 @@ function SignupBandPage(props) {
     name: "",
     nickname: "",
     email: "",
-    description: "",
     password: ""
   })
 
@@ -41,7 +40,7 @@ function SignupBandPage(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    signupBand(input);
+    signupAdm(input);
   }
 
   const goToLoginPage = () => {
@@ -92,21 +91,6 @@ function SignupBandPage(props) {
           />
         </FormControl>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="email">Descrição</InputLabel>
-          <OutlinedInput
-            id="description"
-            name="description"
-            label="Descrição"
-            type="text"
-            onChange={handleChangeInput}
-            value={input.description}
-            required
-            variant="outlined"
-            multiline={true}
-            rows="5"
-          />
-        </FormControl>
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="password">Senha</InputLabel>
           <OutlinedInput
             id="password"
@@ -142,4 +126,4 @@ function SignupBandPage(props) {
 }
 
 
-export default SignupBandPage;
+export default AdmSignupPage;

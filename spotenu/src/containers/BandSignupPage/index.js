@@ -3,20 +3,23 @@ import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, For
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
-import { signup } from '../../actions/user';
+import { bandSignup } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
-import { routes } from "../../containers/Router";
+import { routes } from "../Router";
+import { useDispatch } from "react-redux";
 
-function SignupListenerPage(props) {
+function BandSignupPage(props) {
 
   const classes = useStyles();
   let history = useHistory();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
     nickname: "",
     email: "",
+    description: "",
     password: ""
   })
 
@@ -40,7 +43,7 @@ function SignupListenerPage(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    signup(input);
+    dispatch(bandSignup(input));
   }
 
   const goToLoginPage = () => {
@@ -91,6 +94,21 @@ function SignupListenerPage(props) {
           />
         </FormControl>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+          <InputLabel htmlFor="email">Descrição</InputLabel>
+          <OutlinedInput
+            id="description"
+            name="description"
+            label="Descrição"
+            type="text"
+            onChange={handleChangeInput}
+            value={input.description}
+            required
+            variant="outlined"
+            multiline={true}
+            rows="5"
+          />
+        </FormControl>
+        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="password">Senha</InputLabel>
           <OutlinedInput
             id="password"
@@ -125,5 +143,4 @@ function SignupListenerPage(props) {
 
 }
 
-
-export default SignupListenerPage;
+export default BandSignupPage;

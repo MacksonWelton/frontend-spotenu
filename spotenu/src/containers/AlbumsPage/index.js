@@ -1,10 +1,11 @@
+import { Container } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useState } from "react";
-import { Container, Button } from "@material-ui/core";
+import { AddMusicAlbum } from "../../actions/music";
+import AddForm from "../../components/AddForm";
+import EnhancedTableHead from "../../components/EnhancedTableHead";
 import Header from "../../components/Header";
 import { useStyles } from "./style";
-import AddForm from "../../components/AddForm";
-import { AddMusicAlbum } from "../../actions/music";
-import EnhancedTableHead from "../../components/EnhancedTableHead";
 
 const AlbumsPage = () => {
   const classes = useStyles();
@@ -20,10 +21,11 @@ const AlbumsPage = () => {
     return { name, genre, band, button };
   }
 
-  const rows = [
-    createData("Forró 2020", "Forró", "Banda de Forró", <Button>Deletar</Button>)
-  ];
+  const buttonDelete = <DeleteIcon />;
 
+  const rows = [
+    createData("Forró 2020", "Forró", "Banda de Forró", buttonDelete)
+  ];
 
   const [input, setInput] = useState({
     data: ""
@@ -50,7 +52,7 @@ const AlbumsPage = () => {
         name="album"
         label="Álbum"
       />
-      <EnhancedTableHead rows={rows} headCells={headCells} title="Álbuns"/>
+      <EnhancedTableHead rows={rows} headCells={headCells} title="Álbuns" />
     </Container>
   )
 }

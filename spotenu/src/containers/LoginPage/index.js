@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
+import { Button, Container, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, Box } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, LoginButtom, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
+import React, { useState } from "react";
 import { login } from '../../actions/user';
 import Header from "../../components/Header/index";
 import LoginPageSignupButtons from "../../components/LoginPageSignupButtons";
+import { useStyles } from "./style";
+import {useDispatch} from "react-redux";
 
-
-function Login(props) {
+function Login() {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
@@ -38,13 +39,13 @@ function Login(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    login(input);
+    dispatch(login(input));
   }
 
   return (
-    <ContainerWrapper maxWidth={false}>
+    <Container className={classes.root} maxWidth={false}>
       <Header />
-      <Form onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="name">Nome</InputLabel>
           <OutlinedInput
@@ -96,12 +97,12 @@ function Login(props) {
           />
           <FormHelperText id="password">Digite uma senha com no mínimo 6 dígitos.</FormHelperText>
         </FormControl>
-        <BoxButtons>
-          <LoginButtom variant="contained" color="primary" type="submit">Entrar</LoginButtom>
-        </BoxButtons>
-      </Form>
-      <LoginPageSignupButtons/>
-    </ContainerWrapper>
+        <Box className={classes.boxButtons}>
+          <Button className={classes.loginButton} variant="contained" color="primary" type="submit">Entrar</Button>
+        </Box>
+      </form>
+      <LoginPageSignupButtons />
+    </Container>
   )
 
 }
