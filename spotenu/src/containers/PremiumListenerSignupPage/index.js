@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, FormHelperText } from "@material-ui/core";
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
-import { signupAdm } from '../../actions/user';
-import Header from "../../components/Header/index";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { routes } from "../../containers/Router";
+import Header from "../../components/Header/index";
+import { routes } from "../Router";
+import { BoxButtons, ContainerWrapper, Form, SignupButton, useStyles } from "./style";
+import { premiumListenerSignup } from "../../actions/user";
+import { useDispatch } from "react-redux";
 
-function SignupAdmPage(props) {
+const PremiumListenerSignupPage = (props) => {
 
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
@@ -40,7 +42,7 @@ function SignupAdmPage(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    signupAdm(input);
+    dispatch(premiumListenerSignup(input));
   }
 
   const goToLoginPage = () => {
@@ -49,7 +51,7 @@ function SignupAdmPage(props) {
 
   return (
     <ContainerWrapper maxWidth={false}>
-      <Header/>
+      <Header />
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="name">Nome</InputLabel>
@@ -126,4 +128,4 @@ function SignupAdmPage(props) {
 }
 
 
-export default SignupAdmPage;
+export default PremiumListenerSignupPage;

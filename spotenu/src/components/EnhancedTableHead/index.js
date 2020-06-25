@@ -195,11 +195,6 @@ const EnhancedTableHead = (props) => {
     setPage(0);
   };
 
-  const remove = (id) => {
-    console.log(id)
-  }
-
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);

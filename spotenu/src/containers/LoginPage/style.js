@@ -1,49 +1,10 @@
-import styled from 'styled-components';
-import { Button, Box, Container } from "@material-ui/core";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  margin: auto;
-
-  @media(max-width: 800px) {
-    width: 90%;
-  }
-`
-
-export const ContainerWrapper = withStyles({
+export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     padding: 0,
     margin: 0,
-  }
-})(Container)
-
-export const BoxButtons = withStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "10px 0px",
-  }
-
-})(Box)
-
-export const LoginButtom = withStyles({
-  root: {
-    width: "200px"
-  }
-})(Button)
-
-
-export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
   },
   margin: {
     margin: theme.spacing(1),
@@ -54,4 +15,22 @@ export const useStyles = makeStyles((theme) => ({
   textField: {
     width: '100%',
   },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    width: "90%",
+    margin: "50px auto",
+    [theme.breakpoints.up('md')]: {
+      width: '500px',
+    }
+  },
+  boxButtons: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "10px 0px",
+  },
+  loginButton: {
+    width: "200px"
+  }
 }));

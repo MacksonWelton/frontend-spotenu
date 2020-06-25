@@ -1,19 +1,4 @@
-import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
-
-
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  margin: auto;
-
-  @media(max-width: 800px) {
-    width: 90%;
-  }
-`
-
 
 export const useStyles = makeStyles((theme) => ({
   root: {

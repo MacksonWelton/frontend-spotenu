@@ -1,39 +1,38 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
-import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
-import InputOutlinedIcon from '@material-ui/icons/InputOutlined';
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
 import MailIcon from "@material-ui/icons/Mail";
+import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 import clsx from "clsx";
-import { useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { routes } from "../../containers/Router";
-
 import { useStyles } from "./style";
+import { Button } from '@material-ui/core';
+
 
 const Header = () => {
-  const page = useSelector((state) => state.router.location.pathname).includes("/");
+  const page = window.localStorage.getItem("token");
   let history = useHistory();
 
   function handleClick() {
-    history.push(routes.homePage);
+    history.push(routes.HomePage);
   }
 
   function goToLoginPage() {
@@ -97,6 +96,12 @@ const Header = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logoff = () => {
+    handleUserMenuClose()
+    window.localStorage.clear();
+    history.push(routes.homePage);
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderUserMenu = (
     <Menu
@@ -108,21 +113,9 @@ const Header = () => {
       open={isUserMenuOpen}
       onClose={handleUserMenuClose}
     >
-      {page === true ?
-        (
-          <div>
-            <MenuItem onClick={handleUserMenuClose}>Ver Perfil</MenuItem>
-            <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
-            <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
-          </div>
-        )
-        :
-        (
-          <div>
-            <MenuItem onClick={goToLoginPage}>Entrar</MenuItem>
-          </div>
-        )
-      }
+      <div>
+        <MenuItem onClick={logoff}>Sair</MenuItem>
+      </div>
     </Menu>
   );
 
@@ -148,7 +141,7 @@ const Header = () => {
           {
             title: "Adicionar Álbum",
             page: goToMusicAlbumPage
-          }].map((text, index) => (
+          }].map((text) => (
             <ListItem button key={text.title} onClick={text.page}>
               <ListItemIcon>
                 <AddCircleOutlinedIcon />
@@ -182,41 +175,9 @@ const Header = () => {
       open={isMobileUserMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {page === true ?
-        (
-          <div>
-            <MenuItem onClick={handleUserMenuClose}>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <p>Ver Perfil</p>
-            </MenuItem>
-            <MenuItem onClick={handleUserMenuClose}>Editar Perfil</MenuItem>
-            <MenuItem onClick={handleUserMenuClose}>Sair</MenuItem>
-          </div>
-        )
-        :
-        (
-          <div>
-            <MenuItem onClick={goToLoginPage}>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <InputOutlinedIcon />
-              </IconButton>
-              <p>Entrar</p>
-            </MenuItem>
-          </div>
-        )
-      }
+      <div>
+        <MenuItem onClick={logoff}>Sair</MenuItem>
+      </div>
     </Menu>
   );
 
@@ -235,12 +196,12 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-            )}
+            )
+          }
           <Typography onClick={handleClick} className={classes.title} variant="h6" noWrap>
             Spotenu
             <MusicNoteOutlinedIcon />
           </Typography>
-
           {
             page && (
               <div className={classes.search}>
@@ -259,28 +220,39 @@ const Header = () => {
             )}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
-              onClick={handleUserMenuOpen}
-            >
-              <AccountCircle />
-            </IconButton>
+            {
+              page ? (
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  color="inherit"
+                  onClick={handleUserMenuOpen}
+                >
+                  <AccountCircle />
+                </IconButton>
+              ) : (
+                  <Button onClick={goToLoginPage} variant="contained" color="secondary">Entrar</Button>
+                )
+            }
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileUserMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-
+            {
+              page ? (
+                <IconButton
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileUserMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              ) : (
+                  <Button onClick={goToLoginPage} variant="contained" color="secondary">Entrar</Button>
+                )
+            }
           </div>
         </Toolbar>
       </AppBar>

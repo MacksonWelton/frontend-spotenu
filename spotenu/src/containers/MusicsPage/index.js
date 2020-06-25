@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { InputLabel, FormControl, OutlinedInput, TextField, MenuItem, Button, Container, Box } from "@material-ui/core";
-import { useStyles } from "./style";
+import { Box, Button, Container, FormControl, InputLabel, MenuItem, OutlinedInput, TextField } from "@material-ui/core";
 import clsx from 'clsx';
-import Header from "../../components/Header/index";
+import React, { useState } from "react";
 import { addMusic } from "../../actions/music";
+import Header from "../../components/Header/index";
+import { useStyles } from "./style";
 
 
 function MusicsPage(props) {

@@ -14,7 +14,8 @@ import theme from "./style/theme";
 import { routerMiddleware } from "connected-react-router";
 import { Provider } from "react-redux";
 import { generateReducers } from "./reducers";
-import { Router } from "./containers/Router";
+import { CustomRouter } from "./containers/Router";
+import thunk from "redux-thunk";
 
 const history = createBrowserHistory();
 
@@ -29,7 +30,7 @@ jss.options.createGenerateClassName = generateClassName;
 
 const store = createStore(
   generateReducers(history),
-  applyMiddleware(routerMiddleware(history))
+  applyMiddleware(routerMiddleware(history), thunk)
 );
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Router history={history} />
+        <CustomRouter history={history} />
       </MuiThemeProvider>
     </JssProvider>
   </Provider>

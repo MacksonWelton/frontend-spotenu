@@ -3,15 +3,17 @@ import { IconButton, InputAdornment, InputLabel, FormControl, OutlinedInput, For
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Form, SignupButton, BoxButtons, useStyles, ContainerWrapper } from "./style";
 import clsx from 'clsx';
-import { signupPremiumListener } from '../../actions/user';
+import { listenerSignup } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
+import { useDispatch } from "react-redux";
 
-const SignupPremiumListenerPage = (props) => {
+function ListenerSignupPage(props) {
 
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
@@ -40,7 +42,7 @@ const SignupPremiumListenerPage = (props) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    signupPremiumListener(input);
+    dispatch(listenerSignup(input));
   }
 
   const goToLoginPage = () => {
@@ -126,4 +128,4 @@ const SignupPremiumListenerPage = (props) => {
 }
 
 
-export default SignupPremiumListenerPage;
+export default ListenerSignupPage;
