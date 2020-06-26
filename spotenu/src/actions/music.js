@@ -1,11 +1,14 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001";
+import {baseUrl, getToken, getTokenAdm} from "../utils/constants";
 
-export const AddMusicGenre = async (input)  => {
+export const AddMusicGenre = (input) => async (dispatch)  => {
   try {
 
-     const response = await axios.post(`${baseUrl}/add-music-genre`, input);
-     window.localStorage.setItem("token", response.data);
+     await axios.post(`${baseUrl}/musics/add-genre`, input, {
+       headers: {
+         authorization: getTokenAdm()
+       }
+     });
 
   } catch(err) {
     console.error(err.message)
@@ -13,19 +16,29 @@ export const AddMusicGenre = async (input)  => {
 }
 
 
-export const AddMusicAlbum = async (input)  => {
+export const AddMusicAlbum = (input) => async (dispatch)=> {
   try {
 
-     const response = await axios.post(`${baseUrl}/add-music-album`, input);
-     window.localStorage.setItem("token", response.data);
+      await axios.post(`${baseUrl}/create-album`, input, {
+       headers: {
+         authorization: getToken()
+       }
+     });
 
   } catch(err) {
     console.error(err.message)
   }
 }
 
-export const addMusic = async (input) => {
+export const addMusic = (input) => async (dispatch) => {
+  const token = getToken();
   try {
+
+    await axios.post(`${baseUrl}`, input, {
+      headers: {
+        authorization: getToken()
+      }
+    })
 
   } catch(err) {
     console.error(err.message)
