@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,22 +14,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
-import MailIcon from "@material-ui/icons/Mail";
+import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from "clsx";
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { routes } from "../../containers/Router";
 import { useStyles } from "./style";
-import { Button } from '@material-ui/core';
+import { getToken, getTokenAdm } from '../../utils/constants';
 
 
 const Header = () => {
-  const page = window.localStorage.getItem("token");
-  let history = useHistory();
+  const page = getToken() || getTokenAdm();
+  const history = useHistory();
 
   function handleClick() {
     history.push(routes.HomePage);
@@ -49,6 +49,10 @@ const Header = () => {
 
   function goToMusicAlbumPage() {
     history.push(routes.AlbumsPage);
+  }
+
+  function goToAllBandsPage() {
+    history.push(routes.AllBandsPage)
   }
 
   const classes = useStyles();
@@ -150,17 +154,22 @@ const Header = () => {
             </ListItem>
           ))}
       </List>
-      <Divider />
+      <Divider /> 
+      { getTokenAdm() &&
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
+        {[{
+          title: "Bandas",
+          page: goToAllBandsPage
+        }].map((text, index) => (
+          <ListItem button key={text.title} onClick={text.page}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <ListAltOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={text.title} />
           </ListItem>
         ))}
       </List>
+      }
     </div>
   );
 

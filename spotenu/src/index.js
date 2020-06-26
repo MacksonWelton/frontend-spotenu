@@ -1,20 +1,19 @@
-import ReactDOM from "react-dom";
-import React from "react";
-import { createBrowserHistory } from "history";
-import { createStore, applyMiddleware } from "redux";
-import {JssProvider} from "react-jss";
 import {
-  MuiThemeProvider,
   createGenerateClassName,
-  jssPreset,
-  CssBaseline
+
+  CssBaseline, jssPreset, MuiThemeProvider
 } from "@material-ui/core";
-import { create } from "jss";
-import theme from "./style/theme";
 import { routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
+import { create } from "jss";
+import React from "react";
+import ReactDOM from "react-dom";
+import { JssProvider } from "react-jss";
 import { Provider } from "react-redux";
-import { generateReducers } from "./reducers";
+import { applyMiddleware, createStore } from "redux";
 import { CustomRouter } from "./containers/Router";
+import { generateReducers } from "./reducers";
+import theme from "./style/theme";
 import thunk from "redux-thunk";
 
 const history = createBrowserHistory();
@@ -28,6 +27,7 @@ const jss = create({
 
 jss.options.createGenerateClassName = generateClassName;
 
+
 const store = createStore(
   generateReducers(history),
   applyMiddleware(routerMiddleware(history), thunk)
@@ -36,13 +36,13 @@ const store = createStore(
 function App() {
   return (
     <Provider store={store}>
-    <JssProvider jss={jss} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <CustomRouter history={history} />
-      </MuiThemeProvider>
-    </JssProvider>
-  </Provider>
+      <JssProvider jss={jss} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <CustomRouter history={history} />
+        </MuiThemeProvider>
+      </JssProvider>
+    </Provider>
   );
 }
 
@@ -50,6 +50,6 @@ const ConnectedApp = App;
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-    <ConnectedApp />,
+  <ConnectedApp />,
   rootElement
 );

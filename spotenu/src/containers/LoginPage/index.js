@@ -7,14 +7,16 @@ import Header from "../../components/Header/index";
 import LoginPageSignupButtons from "../../components/LoginPageSignupButtons";
 import { useStyles } from "./style";
 import {useDispatch} from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Login() {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [input, setInput] = useState({
-    name: "",
+    nickname: "",
     email: "",
     password: ""
   })
@@ -39,7 +41,7 @@ function Login() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(login(input));
+    dispatch(login(input, history));
   }
 
   return (
@@ -47,15 +49,15 @@ function Login() {
       <Header />
       <form className={classes.form} onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="name">Nome</InputLabel>
+          <InputLabel htmlFor="nickname">Apelido</InputLabel>
           <OutlinedInput
             id="name"
-            name="name"
-            label="Nome"
+            name="nickname"
+            label="Apelido"
             type="text"
             required
             onChange={handleChangeInput}
-            value={input.name}
+            value={input.niclname}
             variant="outlined"
           />
         </FormControl>
