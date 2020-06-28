@@ -9,7 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
-    "connected-react-router": "^6.8.0",
+    "connected-react-router": "^6.0.0",
     "history": "^5.0.0",
     "jss": "^10.3.0",
     "prop-types": "^15.7.2",

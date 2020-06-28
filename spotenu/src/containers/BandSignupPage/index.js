@@ -8,6 +8,7 @@ import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../Router";
 import { useDispatch } from "react-redux";
+import { getToken } from "../../utils/constants";
 
 function BandSignupPage(props) {
 
@@ -41,9 +42,12 @@ function BandSignupPage(props) {
     event.preventDefault();
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    dispatch(bandSignup(input));
+    await dispatch(bandSignup(input));
+    if (getToken()) {
+      history.push(routes.HomePage);
+    }
   }
 
   const goToLoginPage = () => {
@@ -52,7 +56,7 @@ function BandSignupPage(props) {
 
   return (
     <ContainerWrapper maxWidth={false}>
-      <Header/>
+      <Header />
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="name">Nome</InputLabel>
