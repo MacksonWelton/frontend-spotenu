@@ -5,21 +5,17 @@ import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
 import { useStyles } from "./style";
 
-const AdmHomepageItems = () => {
+const BandHomePageItems = () => {
 
   const classes = useStyles();
   const history = useHistory();
 
-  const goToMusicGenrePage = () => {
-    history.push(routes.MusicGenrePage)
+  const goToAddAlbumsPage = () => {
+    history.push(routes.AddAlbumsPage)
   }
 
-  const goToAllBandsPage = () => {
-    history.push(routes.AllBandsPage)
-  }
-
-  const goToAdmSignupPage = () => {
-    history.push(routes.AdmSignupPage)
+  const goToAddMusicsPage = () => {
+    history.push(routes.AddMusicsPage)
   }
 
   return (
@@ -30,11 +26,11 @@ const AdmHomepageItems = () => {
             <Box className={classes.boxButtons}>
               <Button
                 className={classes.signupButton}
-                onClick={goToAllBandsPage}
+                onClick={goToAddMusicsPage}
                 variant="contained"
                 color="primary"
                 type="submit">
-                Aprovar Bandas
+                Adicionar Música
               </Button>
             </Box>
           </div>
@@ -44,25 +40,11 @@ const AdmHomepageItems = () => {
             <Box className={classes.boxButtons}>
               <Button
                 className={classes.signupButton}
-                onClick={goToAdmSignupPage}
+                onClick={goToAddAlbumsPage}
                 variant="contained"
                 color="primary"
                 type="submit">
-                Adicionar Administrador
-              </Button>
-            </Box>
-          </div>
-        </Grid>
-        <Grid className={clsx(classes.gridItemUsers)} item>
-          <div className={classes.contentGridItem}>
-            <Box className={classes.boxButtons}>
-              <Button
-                className={classes.signupButton}
-                onClick={goToMusicGenrePage}
-                variant="contained"
-                color="primary"
-                type="submit">
-                Adicionar Gênero
+                Adicionar Album
               </Button>
             </Box>
           </div>
@@ -73,4 +55,4 @@ const AdmHomepageItems = () => {
 
 }
 
-export default AdmHomepageItems;
+export default BandHomePageItems;

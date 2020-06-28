@@ -1,14 +1,10 @@
 import axios from "axios";
 import { baseUrl, getToken, getTokenAdm } from "../utils/constants";
-import {push} from "connected-react-router";
-import {routes} from "../containers/Router";
-
 
 export const listenerSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/listener-signup`, input);
     window.localStorage.setItem("token", response.data.token);
-    dispatch(push(routes.HomePage))
   } catch (err) {
     console.error(err.message);
   }
@@ -18,22 +14,19 @@ export const bandSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/band-singup`, input);
     window.localStorage.setItem("token", response.data.token);
-    dispatch(push(routes.HomePage));
   } catch (err) {
     console.error(err.message);
   }
 }
 
-export const signupAdm = (input) => async (dispatch)=> {
-  const token = getToken();
+export const signupAdm = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/admin-signup`, input, {
       headers: {
-        token: token
+        token: getTokenAdm()
       }
     });
-    window.localStorage.setItem("token", response.data.token);
-    dispatch(push(routes.HomePage));
+    window.localStorage.setItem("tokenAdm", response.data.token);
   } catch (err) {
     console.error(err.message);
   }
@@ -43,7 +36,6 @@ export const premiumListenerSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/premium-listener-signup`, input);
     window.localStorage.setItem("token", response.data.token);
-    dispatch(push(routes.HomePage));
   } catch (err) {
     console.error(err.message);
   }
@@ -57,7 +49,6 @@ export const login = (input) => async (dispatch) => {
     } else {
       window.localStorage.setItem("tokenAdm", response.data.tokenAdm)
     }
-    dispatch(push(routes.HomePage));
   } catch (err) {
     console.error(err.message);
   }
@@ -70,11 +61,11 @@ export const getAllBands = () => async (dispatch) => {
   } else {
     token = getTokenAdm();
   }
-  
+
   try {
 
     const response = await axios.get(`${baseUrl}/users/all-bands`, {
-      headers: { 
+      headers: {
         authorization: token
       }
     })
@@ -93,7 +84,7 @@ export const setAllBands = (allBands) => ({
 })
 
 export const approveBands = (id, isApprove = true) => async (dispatch) => {
-  await axios.put(`${baseUrl}/users/approve-band`, {id, isApprove}, { 
+  await axios.put(`${baseUrl}/users/approve-band`, { id, isApprove }, {
     headers: {
       authorization: getTokenAdm()
     }

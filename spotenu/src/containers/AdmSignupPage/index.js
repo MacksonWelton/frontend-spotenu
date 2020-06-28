@@ -7,11 +7,14 @@ import { signupAdm } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
+import { getToken } from "../../utils/constants";
+import { useDispatch } from "react-redux";
 
 function AdmSignupPage(props) {
 
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
@@ -38,9 +41,11 @@ function AdmSignupPage(props) {
     event.preventDefault();
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    signupAdm(input);
+    await dispatch(signupAdm(input));
+    if (getToken())
+      history.push(routes.HomePage)
   }
 
   const goToLoginPage = () => {
@@ -49,7 +54,7 @@ function AdmSignupPage(props) {
 
   return (
     <ContainerWrapper maxWidth={false}>
-      <Header/>
+      <Header />
       <Form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="name">Nome</InputLabel>

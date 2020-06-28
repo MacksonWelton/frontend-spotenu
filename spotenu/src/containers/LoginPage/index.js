@@ -6,8 +6,10 @@ import { login } from '../../actions/user';
 import Header from "../../components/Header/index";
 import LoginPageSignupButtons from "../../components/LoginPageSignupButtons";
 import { useStyles } from "./style";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { routes } from "../Router";
+import { getToken, getTokenAdm } from "../../utils/constants";
 
 function Login() {
 
@@ -39,9 +41,13 @@ function Login() {
     event.preventDefault();
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    dispatch(login(input, history));
+    await dispatch(login(input))
+
+    if (getToken() || getTokenAdm()) {
+      history.push(routes.HomePage);
+    }
   }
 
   return (

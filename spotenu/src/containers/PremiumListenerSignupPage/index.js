@@ -40,9 +40,10 @@ const PremiumListenerSignupPage = (props) => {
     event.preventDefault();
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    dispatch(premiumListenerSignup(input));
+    await dispatch(premiumListenerSignup(input));
+    history.push(routes.HomePage)
   }
 
   const goToLoginPage = () => {

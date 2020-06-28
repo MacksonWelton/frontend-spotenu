@@ -39,16 +39,16 @@ const Header = () => {
     history.push(routes.LoginPage);
   }
 
-  function goToMusicPage() {
-    history.push(routes.MusicsPage);
+  function goToAddMusicPage() {
+    history.push(routes.AddMusicsPage);
   }
 
   function goToMusicGenrePage() {
     history.push(routes.MusicGenrePage);
   }
 
-  function goToMusicAlbumPage() {
-    history.push(routes.AlbumsPage);
+  function goToAddAlbumsPage() {
+    history.push(routes.AddAlbumsPage);
   }
 
   function goToAllBandsPage() {
@@ -136,15 +136,11 @@ const Header = () => {
         {[
           {
             title: "Adicionar Música",
-            page: goToMusicPage
-          },
-          {
-            title: "Adicionar Gênero",
-            page: goToMusicGenrePage
+            page: goToAddMusicPage
           },
           {
             title: "Adicionar Álbum",
-            page: goToMusicAlbumPage
+            page: goToAddAlbumsPage
           }].map((text) => (
             <ListItem button key={text.title} onClick={text.page}>
               <ListItemIcon>
@@ -154,21 +150,25 @@ const Header = () => {
             </ListItem>
           ))}
       </List>
-      <Divider /> 
-      { getTokenAdm() &&
-      <List>
-        {[{
-          title: "Bandas",
-          page: goToAllBandsPage
-        }].map((text, index) => (
-          <ListItem button key={text.title} onClick={text.page}>
-            <ListItemIcon>
-              <ListAltOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={text.title} />
-          </ListItem>
-        ))}
-      </List>
+      <Divider />
+      {getTokenAdm() &&
+        <List>
+          {[{
+            title: "Aprovar Bandas",
+            page: goToAllBandsPage
+          },
+          {
+            title: "Adicionar Gênero",
+            page: goToMusicGenrePage
+          }].map((text, index) => (
+            <ListItem button key={text.title} onClick={text.page}>
+              <ListItemIcon>
+                <ListAltOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={text.title} />
+            </ListItem>
+          ))}
+        </List>
       }
     </div>
   );

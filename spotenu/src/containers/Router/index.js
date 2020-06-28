@@ -1,17 +1,17 @@
 import React from "react";
-import { Switch, Route, Router, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ProtectedAdmRoute } from "../../components/ProtectedAdmRoute";
+import { ProtectedUserRoute } from "../../components/ProtectedUserRoute";
+import AllBandsPage from "../../containers/AllBandsPage";
+import AdmSignupPage from "../AdmSignupPage";
+import AddAlbumsPage from "../AddAlbumsPage";
+import BandSignupPage from "../BandSignupPage";
 import HomePage from "../HomePage";
 import ListenerSignupPage from "../ListenerSignupPage";
 import LoginPage from "../LoginPage";
-import BandSignupPage from "../BandSignupPage";
-import AdmSignupPage from "../AdmSignupPage";
-import PremiumListenerSignupPage from "../PremiumListenerSignupPage";
-import AllBandsPage from "../../containers/AllBandsPage";
-import {ProtectedUserRoute }  from "../../components/ProtectedUserRoute";
-import {ProtectedAdmRoute} from "../../components/ProtectedAdmRoute";
 import MusicGenrePage from "../MusicGenrePage";
-import AlbumsPage from "../AlbumsPage";
-import MusicsPage from "../MusicsPage";
+import AddMusicsPage from "../AddMusicsPage";
+import PremiumListenerSignupPage from "../PremiumListenerSignupPage";
 
 export const routes = {
   HomePage: "/",
@@ -22,27 +22,27 @@ export const routes = {
   AdmSignupPage: "/adm-signup",
   AllBandsPage: "/all-bands",
   MusicGenrePage: "/add-music-genre",
-  AlbumsPage: "/albums",
-  MusicsPage: "/MusicsPage"
+  AddAlbumsPage: "/add-albums",
+  AddMusicsPage: "/add-musics-page"
 };
 
 export const CustomRouter = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Switch>
         <Route exact path={routes.HomePage} component={HomePage} />
         <Route exact path={routes.LoginPage} component={LoginPage} />
         <Route exact path={routes.ListenerSignupPage} component={ListenerSignupPage} />
-        <Route exact path={routes.PremiumListenerSignupPage} component={PremiumListenerSignupPage}/>
+        <Route exact path={routes.PremiumListenerSignupPage} component={PremiumListenerSignupPage} />
         <Route exact path={routes.BandSignupPage} component={BandSignupPage} />
         <Route exact path={routes.AdmSignupPage} component={AdmSignupPage} />
 
         <ProtectedAdmRoute exact path={routes.AllBandsPage} component={AllBandsPage} />
 
-        <ProtectedUserRoute exact path={routes.MusicGenrePage} component={MusicGenrePage}/>
-        <ProtectedUserRoute exact path={routes.AlbumsPage} component={AlbumsPage}/>
-        <ProtectedUserRoute exact path={routes.MusicsPage} component={MusicsPage}/>
+        <ProtectedUserRoute exact path={routes.MusicGenrePage} component={MusicGenrePage} />
+        <ProtectedUserRoute exact path={routes.AddAlbumsPage} component={AddAlbumsPage} />
+        <ProtectedUserRoute exact path={routes.AddMusicsPage} component={AddMusicsPage} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };

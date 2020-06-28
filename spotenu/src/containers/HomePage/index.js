@@ -4,7 +4,8 @@ import Header from "../../components/Header";
 import VisitorHomepageItems from "../../components/VisitorHomepageItems";
 import AdmHomepageItems from "../../components/AdmHomepageItems";
 import { useStyles } from "./style";
-import { getTokenAdm } from "../../utils/constants";
+import { getTokenAdm, getToken } from "../../utils/constants";
+import BandHomePageItems from "../../components/BandHomePageItems";
 
 const HomePage = () => {
   const classes = useStyles();
@@ -12,7 +13,9 @@ const HomePage = () => {
   return (
     <Container className={classes.root} maxWidth={false}>
       <Header />
-      {getTokenAdm() ? <AdmHomepageItems /> : <VisitorHomepageItems />}
+      {
+        getTokenAdm() ? <AdmHomepageItems /> : getToken() ? <BandHomePageItems/> : <VisitorHomepageItems />
+      }
     </Container>
   )
 
