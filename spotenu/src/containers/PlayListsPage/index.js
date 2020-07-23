@@ -1,20 +1,33 @@
 import { Container, LinearProgress } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { AddMusicGenre, getAllGenres } from "../../actions/genre";
+import { useDispatch, useSelector } from "react-redux";
+import { createPlaylist, getAllPlaylists, getPlaylistsByUser } from "../../actions/playlist";
 import AddForm from "../../components/AddForm";
 import EnhancedTableHead from "../../components/EnhancedTableHead";
 import Header from "../../components/Header";
 import { useStyles } from "./style";
-import { useDispatch, useSelector } from "react-redux";
+import { getTokenPremiumListener } from "../../utils/constants";
 
-const MusicGenrePage = () => {
+const PlaylistsPage = () => {
   const classes = useStyles();
-  const { genres, numberOfRows } = useSelector((state) => state.genres.allGenres);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllGenres());
+    if (getTokenPremiumListener()) {
+      dispatch(getPlaylistsByUser())
+    } else {
+      dispatch(getAllPlaylists());
+    }
   }, [dispatch]);
+
+  const allPlaylists = useSelector((state) => state.playlists.allPlaylists.playlists);
+  const numberOfRowsAllPlaylists = useSelector((state) => state.playlists.allPlaylists.numberOfRows);
+
+  const playlistsByUser = useSelector((state) => state.playlists.playlistsByUser.playlists);
+  const numberOfRowsByUser = useSelector((state) => state.playlists.playlistsByUser.numberOfRows);
+
+  const playlists = allPlaylists.length === 0 ? playlistsByUser : allPlaylists;
+  const numberOfRows = numberOfRowsAllPlaylists === 0 ? numberOfRowsByUser : numberOfRowsAllPlaylists;
 
 
   const [input, setInput] = useState({
@@ -29,19 +42,23 @@ const MusicGenrePage = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(AddMusicGenre(input))
+    dispatch(createPlaylist(input))
   }
 
   const headCells = [
     { id: 'name', numeric: true, disablePadding: true, label: 'Nome' },
   ];
 
-  function createData(name) {
-    return { name };
+  function createData(name, id) {
+    return { name, id };
   }
 
-  const rows = genres.map(data => {
-    return createData(data.name)
+  console.log(playlists)
+
+  const rows = playlists.map(playlist => {
+    return createData(
+      playlist.name_playlist, 
+      playlist.id_playlist);
   })
 
   return (
@@ -52,16 +69,16 @@ const MusicGenrePage = () => {
         input={input}
         handleInput={handleInput}
         name="name"
-        label="Gênero"
+        label="Playlist"
       />
       {
-        genres.length !== 0 ?
+        playlists.length !== 0 ?
           <EnhancedTableHead
             rows={rows}
             headCells={headCells}
-            title="Gêneros"
+            title="Playlists"
             numberOfRows={numberOfRows}
-            changePage={getAllGenres}
+            changePage={getAllPlaylists}
             addPlaylist={false}
           />
           :
@@ -74,4 +91,4 @@ const MusicGenrePage = () => {
   )
 }
 
-export default MusicGenrePage;
+export default PlaylistsPage;

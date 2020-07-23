@@ -8,7 +8,7 @@ import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../Router";
 import { useDispatch } from "react-redux";
-import { getToken } from "../../utils/constants";
+import { getTokenBand } from "../../utils/constants";
 
 function BandSignupPage(props) {
 
@@ -45,7 +45,7 @@ function BandSignupPage(props) {
   const handleSubmit = async event => {
     event.preventDefault();
     await dispatch(bandSignup(input));
-    if (getToken()) {
+    if (getTokenBand()) {
       history.push(routes.HomePage);
     }
   }

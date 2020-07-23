@@ -4,14 +4,18 @@ import { ProtectedAdmRoute } from "../../components/ProtectedAdmRoute";
 import { ProtectedUserRoute } from "../../components/ProtectedUserRoute";
 import AllBandsPage from "../../containers/AllBandsPage";
 import AdmSignupPage from "../AdmSignupPage";
-import AddAlbumsPage from "../AddAlbumsPage";
+import AlbumsPage from "../AlbumsPage";
 import BandSignupPage from "../BandSignupPage";
 import HomePage from "../HomePage";
 import ListenerSignupPage from "../ListenerSignupPage";
 import LoginPage from "../LoginPage";
 import MusicGenrePage from "../MusicGenrePage";
-import AddMusicsPage from "../AddMusicsPage";
+import MusicsPage from "../MusicsPage";
 import PremiumListenerSignupPage from "../PremiumListenerSignupPage";
+import SearchPage from "../SearchPage";
+import PlaylistsPage from "../PlayListsPage";
+import AllListenersPage from "../AllListenersPage";
+import MusicDetailsPage from "../MusicDetailsPage";
 
 export const routes = {
   HomePage: "/",
@@ -22,8 +26,12 @@ export const routes = {
   AdmSignupPage: "/adm-signup",
   AllBandsPage: "/all-bands",
   MusicGenrePage: "/add-music-genre",
-  AddAlbumsPage: "/add-albums",
-  AddMusicsPage: "/add-musics-page"
+  AlbumsPage: "/albums",
+  MusicsPage: "/musics",
+  PlaylistsPage: "/playlists",
+  SearchPage: "/search",
+  AllListenersPage: "/listeners",
+  MusicDetailsPage: "/music-details"
 };
 
 export const CustomRouter = () => {
@@ -40,8 +48,12 @@ export const CustomRouter = () => {
         <ProtectedAdmRoute exact path={routes.AllBandsPage} component={AllBandsPage} />
 
         <ProtectedUserRoute exact path={routes.MusicGenrePage} component={MusicGenrePage} />
-        <ProtectedUserRoute exact path={routes.AddAlbumsPage} component={AddAlbumsPage} />
-        <ProtectedUserRoute exact path={routes.AddMusicsPage} component={AddMusicsPage} />
+        <ProtectedUserRoute exact path={routes.AlbumsPage} component={AlbumsPage} />
+        <ProtectedUserRoute exact path={routes.MusicsPage} component={MusicsPage} />
+        <ProtectedUserRoute exact path={routes.PlaylistsPage} component={PlaylistsPage} />
+        <ProtectedUserRoute exact path={routes.SearchPage} component={SearchPage} />
+        <ProtectedUserRoute exact path={routes.AllListenersPage} component={AllListenersPage} />
+        <ProtectedUserRoute exact path={routes.MusicDetailsPage} component={MusicDetailsPage} />
       </Switch>
     </Router>
   );

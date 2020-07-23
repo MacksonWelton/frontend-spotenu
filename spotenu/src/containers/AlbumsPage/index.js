@@ -2,11 +2,12 @@ import { Box, Button, Checkbox, Container, FormControl, Input, InputLabel, Linea
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddAlbum, getAllAlbums, getAllGenres, getAlbumsByBand } from "../../actions/music";
+import { getAllGenres } from "../../actions/genre";
+import { AddAlbum, getAllAlbums, getAlbumsByBand, deleteAlbum } from "../../actions/album";
 import EnhancedTableHead from "../../components/EnhancedTableHead";
 import Header from "../../components/Header";
 import { useStyles } from "./style";
-import { getToken } from "../../utils/constants";
+import { getTokenBand } from "../../utils/constants";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,18 +23,17 @@ const MenuProps = {
 const AlbumsPage = () => {
   const classes = useStyles();
 
-  const allGenres = useSelector((state) => state.musics.allGenres);
-  const allAlbums = useSelector((state) => state.musics.allAlbums);
-  const albumsByBand = useSelector((state) => state.musics.albumsByBand);
+  const { genres } = useSelector((state) => state.genres.allGenres);
+  const allAlbums = useSelector((state) => state.albums.allAlbums);
+  const albumsByBand = useSelector((state) => state.albums.albumsByBand);
 
-  const albums = allAlbums.length === 0 ? albumsByBand : allAlbums;
+  const albums = allAlbums.albums.length === 0 ? albumsByBand.albums : allAlbums.albums;
+  const numberOfRows = allAlbums.numberOfRows === 0 ? albumsByBand.numberOfRows : allAlbums.numberOfRows;
 
   const dispatch = useDispatch();
 
-  console.log(albumsByBand)
-
   useEffect(() => {
-    if (getToken()) {
+    if (getTokenBand()) {
       dispatch(getAlbumsByBand());
     } else {
       dispatch(getAllAlbums());
@@ -101,7 +101,7 @@ const AlbumsPage = () => {
             renderValue={(selected) => selected.join(', ')}
             MenuProps={MenuProps}
           >
-            {allGenres.map((option) => (
+            {genres.map((option) => (
               <MenuItem key={option.name} value={option.name}>
                 <Checkbox checked={input.genres.indexOf(option.name) > -1} />
                 <ListItemText primary={option.name} />
@@ -114,8 +114,16 @@ const AlbumsPage = () => {
         </Box>
       </form>
       {
-        allGenres ?
-          <EnhancedTableHead rows={rows} headCells={headCells} title="Álbuns" />
+        genres ?
+          <EnhancedTableHead 
+            rows={rows} 
+            headCells={headCells} 
+            title="Álbuns" 
+            numberOfRows={numberOfRows}
+            changePage={allAlbums.albums.length === 0 ? getAlbumsByBand : getAllAlbums}
+            deleteFunction={deleteAlbum}
+            addPlaylist={false}
+            />
           :
           <div className={classes.loading}>
             <LinearProgress />

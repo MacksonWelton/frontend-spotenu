@@ -1,10 +1,10 @@
 import axios from "axios";
-import { baseUrl, getToken, getTokenAdm } from "../utils/constants";
+import { baseUrl, getTokenAdm, getTokenBand } from "../utils/constants";
 
 export const listenerSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/listener-signup`, input);
-    window.localStorage.setItem("token", response.data.token);
+    window.localStorage.setItem("tokenFreeListener", response.data.tokenFreeListener);
   } catch (err) {
     console.error(err.message);
   }
@@ -13,7 +13,7 @@ export const listenerSignup = (input) => async (dispatch) => {
 export const bandSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/band-singup`, input);
-    window.localStorage.setItem("token", response.data.token);
+    window.localStorage.setItem("tokenBand", response.data.tokenBand);
   } catch (err) {
     console.error(err.message);
   }
@@ -26,7 +26,7 @@ export const signupAdm = (input) => async (dispatch) => {
         token: getTokenAdm()
       }
     });
-    window.localStorage.setItem("tokenAdm", response.data.token);
+    window.localStorage.setItem("tokenAdm", response.data.tokenAdm);
   } catch (err) {
     console.error(err.message);
   }
@@ -35,7 +35,7 @@ export const signupAdm = (input) => async (dispatch) => {
 export const premiumListenerSignup = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/premium-listener-signup`, input);
-    window.localStorage.setItem("token", response.data.token);
+    window.localStorage.setItem("tokenPremiumListener", response.data.tokenPremiumListener);
   } catch (err) {
     console.error(err.message);
   }
@@ -44,33 +44,65 @@ export const premiumListenerSignup = (input) => async (dispatch) => {
 export const login = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${baseUrl}/users/login`, input);
-    if (response.data.token) {
-      window.localStorage.setItem("token", response.data.token);
-    } else {
-      window.localStorage.setItem("tokenAdm", response.data.tokenAdm)
+
+    if (response.data.tokenAdm) {
+      window.localStorage.setItem("tokenAdm", response.data.tokenAdm);
+    } else if (response.data.tokenBand) {
+      window.localStorage.setItem("tokenBand", response.data.tokenBand);
+    } else if (response.data.tokenFreeListener) {
+      window.localStorage.setItem("tokenFreeListener", response.data.tokenFreeListener);
+    } else if (response.data.tokenPremiumListener) {
+      window.localStorage.setItem("tokenPremiumListener", response.data.tokenPremiumListener);
     }
   } catch (err) {
     console.error(err.message);
   }
 }
 
-export const getAllBands = () => async (dispatch) => {
-  let token;
-  if (getToken()) {
-    token = getToken();
-  } else {
-    token = getTokenAdm();
-  }
-
+export const getAllBands = (page) => async (dispatch) => {
   try {
 
-    const response = await axios.get(`${baseUrl}/users/all-bands`, {
+    const response = await axios.get(`${baseUrl}/users/all-bands?page=${page}`, {
       headers: {
-        authorization: token
+        authorization: getTokenBand() || getTokenAdm()
       }
     })
 
     dispatch(setAllBands(response.data))
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const getAllListeners = (page) => async (dispatch) => {
+  try {
+
+    const response = await axios.get(`${baseUrl}/users/all-listener?page=${page}`, {
+      headers: { 
+        authorization: getTokenAdm()
+      }
+    })
+
+    dispatch(setAllListeners(response.data))
+
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const promoteListener = (idListener) => async (dispatch) => {
+
+  try {
+    const response = await axios.put(`${baseUrl}/users/promote-listener`, {idListener}, {
+      headers: {
+        authorization: getTokenAdm()
+      }
+    })
+
+    console.log(response)
+
+    dispatch(getAllListeners())
+
   } catch (err) {
     console.error(err.message);
   }
@@ -92,3 +124,10 @@ export const approveBands = (id, isApprove = true) => async (dispatch) => {
 
   dispatch(getAllBands())
 }
+
+export const setAllListeners = (allListeners) => ({
+  type: "ALL_LISTENERS",
+  payload: {
+    allListeners
+  }
+})

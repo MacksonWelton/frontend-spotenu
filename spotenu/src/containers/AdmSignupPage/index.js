@@ -7,7 +7,7 @@ import { signupAdm } from '../../actions/user';
 import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
-import { getToken } from "../../utils/constants";
+import { getTokenAdm } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 
 function AdmSignupPage(props) {
@@ -44,7 +44,7 @@ function AdmSignupPage(props) {
   const handleSubmit = async event => {
     event.preventDefault();
     await dispatch(signupAdm(input));
-    if (getToken())
+    if (getTokenAdm())
       history.push(routes.HomePage)
   }
 

@@ -9,7 +9,7 @@ import { useStyles } from "./style";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { routes } from "../Router";
-import { getToken, getTokenAdm } from "../../utils/constants";
+import { getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from "../../utils/constants";
 
 function Login() {
 
@@ -45,7 +45,7 @@ function Login() {
     event.preventDefault();
     await dispatch(login(input))
 
-    if (getToken() || getTokenAdm()) {
+    if (getTokenAdm() || getTokenBand() || getTokenFreeListener() || getTokenPremiumListener()) {
       history.push(routes.HomePage);
     }
   }
