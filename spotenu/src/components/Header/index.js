@@ -21,15 +21,18 @@ import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from "clsx";
 import React from 'react';
+import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import { searchMusics } from '../../actions/music';
 import { routes } from "../../containers/Router";
+import { getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from '../../utils/constants';
 import { useStyles } from "./style";
-import { getToken, getTokenAdm } from '../../utils/constants';
 
 
 const Header = () => {
-  const page = getToken() || getTokenAdm();
+  const page = getTokenAdm() || getTokenBand() || getTokenFreeListener() || getTokenPremiumListener();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   function handleClick() {
     history.push(routes.HomePage);
@@ -39,20 +42,28 @@ const Header = () => {
     history.push(routes.LoginPage);
   }
 
-  function goToAddMusicPage() {
-    history.push(routes.AddMusicsPage);
+  function goToMusicPage() {
+    history.push(routes.MusicsPage);
   }
 
   function goToMusicGenrePage() {
     history.push(routes.MusicGenrePage);
   }
 
-  function goToAddAlbumsPage() {
-    history.push(routes.AddAlbumsPage);
+  function goToAlbumsPage() {
+    history.push(routes.AlbumsPage);
   }
 
   function goToAllBandsPage() {
-    history.push(routes.AllBandsPage)
+    history.push(routes.AllBandsPage);
+  }
+
+  function goToPlaylistsPage() {
+    history.push(routes.PlaylistsPage);
+  }
+
+  function goToAllListenersPage() {
+    history.push(routes.AllListenersPage);
   }
 
   const classes = useStyles();
@@ -65,6 +76,7 @@ const Header = () => {
     right: false
   });
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [input, setInput] = React.useState("")
 
   const isUserMenuOpen = Boolean(anchorEl);
 
@@ -106,6 +118,17 @@ const Header = () => {
     history.push(routes.homePage);
   }
 
+  const handleInput = (event) => {
+    setInput(event.target.value)
+  }
+
+  const handleSearch = async (event, search) => {
+    if (event.key === "Enter" || search) {
+      await dispatch(searchMusics(input))
+      history.push(routes.SearchPage)
+    }
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderUserMenu = (
     <Menu
@@ -135,20 +158,39 @@ const Header = () => {
       <List>
         {[
           {
-            title: "Adicionar Música",
-            page: goToAddMusicPage
+            title: "Músicas",
+            page: goToMusicPage
           },
           {
-            title: "Adicionar Álbum",
-            page: goToAddAlbumsPage
-          }].map((text) => (
-            <ListItem button key={text.title} onClick={text.page}>
-              <ListItemIcon>
-                <AddCircleOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary={text.title} />
-            </ListItem>
-          ))}
+            title: "Álbums",
+            page: goToAlbumsPage
+          },
+          {
+            title: "Playlits",
+            page: goToPlaylistsPage
+          }
+        ].map((text) => {
+          if (text.title !== "Adicionar Playlits") {
+            return (
+              <ListItem button key={text.title} onClick={text.page}>
+                <ListItemIcon>
+                  <AddCircleOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={text.title} />
+              </ListItem>
+            )
+          } else if ((getTokenPremiumListener() || getTokenAdm()) && text.title === "Adicionar Playlits") {
+            return (
+              <ListItem button key={text.title} onClick={text.page}>
+                <ListItemIcon>
+                  <AddCircleOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={text.title} />
+              </ListItem>
+            )
+          }
+          return <div key={text.title}></div>;
+        })}
       </List>
       <Divider />
       {getTokenAdm() &&
@@ -160,7 +202,12 @@ const Header = () => {
           {
             title: "Adicionar Gênero",
             page: goToMusicGenrePage
-          }].map((text, index) => (
+          },
+          {
+            title: "Gerenciar Ouvintes",
+            page: goToAllListenersPage
+          }
+          ].map((text) => (
             <ListItem button key={text.title} onClick={text.page}>
               <ListItemIcon>
                 <ListAltOutlinedIcon />
@@ -214,10 +261,11 @@ const Header = () => {
           {
             page && (
               <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
                 <InputBase
+                  type="text"
+                  value={input}
+                  onChange={handleInput}
+                  onKeyDown={handleSearch}
                   placeholder="Pesquisar…"
                   classes={{
                     root: classes.inputRoot,
@@ -225,8 +273,12 @@ const Header = () => {
                   }}
                   inputProps={{ 'aria-label': 'search' }}
                 />
+                <div className={classes.searchIcon} onClick={(event) => handleSearch(event, true)}>
+                  <SearchIcon/>
+                </div>
               </div>
             )}
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {

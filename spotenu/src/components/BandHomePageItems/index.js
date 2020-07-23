@@ -10,12 +10,12 @@ const BandHomePageItems = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const goToAddAlbumsPage = () => {
-    history.push(routes.AddAlbumsPage)
+  const goToAlbumsPage = () => {
+    history.push(routes.AlbumsPage)
   }
 
-  const goToAddMusicsPage = () => {
-    history.push(routes.AddMusicsPage)
+  const goToMusicsPage = () => {
+    history.push(routes.MusicsPage)
   }
 
   return (
@@ -26,7 +26,7 @@ const BandHomePageItems = () => {
             <Box className={classes.boxButtons}>
               <Button
                 className={classes.signupButton}
-                onClick={goToAddMusicsPage}
+                onClick={goToMusicsPage}
                 variant="contained"
                 color="primary"
                 type="submit">
@@ -40,7 +40,7 @@ const BandHomePageItems = () => {
             <Box className={classes.boxButtons}>
               <Button
                 className={classes.signupButton}
-                onClick={goToAddAlbumsPage}
+                onClick={goToAlbumsPage}
                 variant="contained"
                 color="primary"
                 type="submit">

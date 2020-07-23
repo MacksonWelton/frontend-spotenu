@@ -31,5 +31,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     margin: "10px 0px"
+  },
+  link: {
+    cursor: 'pointer',
   }
 }));

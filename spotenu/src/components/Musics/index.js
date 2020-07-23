@@ -1,4 +1,3 @@
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -18,8 +17,10 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useDispatch } from "react-redux";
 import { useStyles, useToolbarStyles } from "./style";
+import { useDispatch } from "react-redux";
+import { searchMusics } from '../../actions/music';
+import { Checkbox } from '@material-ui/core';
 import { getTokenPremiumListener, getTokenAdm } from '../../utils/constants';
 
 function descendingComparator(a, b, orderBy) {
@@ -48,8 +49,8 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-function EnhancedTableHeadHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
+function MusicTableHead(props) {
+  const { classes, order, orderBy, onRequestSort, headCells, numSelected, rowCount, onSelectAllClick } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -91,7 +92,7 @@ function EnhancedTableHeadHead(props) {
   );
 }
 
-EnhancedTableHeadHead.propTypes = {
+MusicTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
@@ -107,10 +108,14 @@ const EnhancedTableHeadToolbar = (props) => {
   const classes = useToolbarStyles();
   const dispatch = useDispatch();
 
-  const { numSelected, title, selected, addPlaylist } = props;
+  const { numSelected, title, selected, addPlaylist, handleClickListItem } = props;
 
   const deleteItem = () => {
     dispatch(props.deleteFunction(selected));
+  }
+
+  const openPlaylists = () => {
+    handleClickListItem(selected)
   }
 
   return (
@@ -130,29 +135,29 @@ const EnhancedTableHeadToolbar = (props) => {
         )}
 
       {numSelected > 0 ?
-        (getTokenPremiumListener() || getTokenAdm()) && addPlaylist ? 
-        (
-          <>
-            <Tooltip title="Adicionar a playlist">
-              <IconButton aria-label="Adicionar a playlist" onClick={deleteItem}>
-                <PlaylistAddIcon />
-              </IconButton>
-            </Tooltip>
+        (getTokenPremiumListener() || getTokenAdm()) && addPlaylist ?
+          (
+            <>
+              <Tooltip title="Adicionar a playlist">
+                <IconButton aria-label="Adicionar a playlist" onClick={openPlaylists}>
+                  <PlaylistAddIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete" onClick={deleteItem}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </>
+          )
+          :
+          (
             <Tooltip title="Delete">
               <IconButton aria-label="delete" onClick={deleteItem}>
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
-          </>
-        )
-          :
-        (
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete" onClick={deleteItem}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        )
+          )
         :
         (
           <Tooltip title="Filter list">
@@ -169,7 +174,7 @@ EnhancedTableHeadToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTableHead = (props) => {
+const Musics = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -179,7 +184,8 @@ const EnhancedTableHead = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { rows, headCells, title, numberOfRows, changePage, deleteFunction, addPlaylist } = props;
+
+  const { rows, headCells, title, numberOfRows, searchedMusic, deleteFunction, addPlaylist, handleClickListItem } = props;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -218,7 +224,7 @@ const EnhancedTableHead = (props) => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    dispatch(changePage(newPage));
+    dispatch(searchMusics(searchedMusic, newPage));
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -231,26 +237,27 @@ const EnhancedTableHead = (props) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableHeadToolbar
-          numSelected={selected.length}
-          title={title}
+        <EnhancedTableHeadToolbar 
+          numSelected={selected.length} 
+          title={title} 
+          addPlaylist={addPlaylist}
           selected={selected}
           deleteFunction={deleteFunction}
-          addPlaylist={addPlaylist}
-        />
+          handleClickListItem={handleClickListItem}
+          />
         <TableContainer>
           <Table
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <EnhancedTableHeadHead
+            <MusicTableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={numberOfRows}
               headCells={headCells}
             />
             <TableBody>
@@ -275,7 +282,6 @@ const EnhancedTableHead = (props) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-
                       {
                         headCells.map((item, i) => (
                           <TableCell key={i} align="center">{row[Object.keys(row)[i]]}</TableCell>
@@ -301,4 +307,4 @@ const EnhancedTableHead = (props) => {
   );
 }
 
-export default EnhancedTableHead;
+export default Musics;

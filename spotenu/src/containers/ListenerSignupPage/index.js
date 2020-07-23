@@ -8,7 +8,7 @@ import Header from "../../components/Header/index";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
 import { useDispatch } from "react-redux";
-import { getToken } from "../../utils/constants";
+import { getTokenFreeListener } from "../../utils/constants";
 
 function ListenerSignupPage(props) {
 
@@ -46,7 +46,7 @@ function ListenerSignupPage(props) {
 
     await dispatch(listenerSignup(input));
 
-    if (getToken()) {
+    if (getTokenFreeListener()) {
       history.push(routes.HomePage);
     }
   }

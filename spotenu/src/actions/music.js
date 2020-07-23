@@ -1,111 +1,35 @@
 import axios from "axios";
-import { baseUrl, getToken, getTokenAdm } from "../utils/constants";
+import { baseUrl, getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from "../utils/constants";
 
-export const AddMusicGenre = (input) => async (dispatch) => {
-  try {
-
-    await axios.post(`${baseUrl}/musics/add-genre`, input, {
-      headers: {
-        authorization: getTokenAdm()
-      }
-    });
-
-    dispatch(getAllGenres())
-
-  } catch (err) {
-    console.error(err.message)
-  }
-}
-
-
-export const AddAlbum = (input) => async (dispatch) => {
-  try {
-
-    await axios.post(`${baseUrl}/musics/create-album`, input, {
-      headers: {
-        authorization: getToken() || getTokenAdm()
-      }
-    });
-
-    dispatch(getAllAlbums());
-
-  } catch (err) {
-    console.error(err.message)
-  }
-}
-
-export const getAllAlbums = () => async (dispatch) => {
-  try {
-
-    const response = await axios.get(`${baseUrl}/musics/albums`, {
-      headers: {
-        authorization: getToken() || getTokenAdm()
-      }
-    })
-
-    dispatch(setAllAlbums(response.data))
-
-  } catch (err) {
-    console.error(err.message)
-  }
-}
-
-export const getAlbumsByBand = () => async (dispatch) => {
-  try {
-
-    const response = await axios.get(`${baseUrl}/musics/albums-by-band`, {
-      headers: {
-        authorization: getToken()
-      }
-    })
-
-    dispatch(setAlbumsByBand(response.data))
-
-  } catch (err) {
-    console.error(err.message)
-  }
-}
-
-export const addMusic = (input) => async () => {
+export const addMusic = (input) => async (dispatch) => {
   try {
 
     await axios.post(`${baseUrl}/musics/add-music`, input, {
       headers: {
-        authorization: getToken()
+        authorization: getTokenBand()
       }
     })
+
+    if (getTokenBand()) {
+      dispatch(getMusicsByBand())
+    } else {
+      dispatch(getAllMusics())
+    }
+
 
   } catch (err) {
     console.error(err.message)
   }
 }
 
-export const getAllGenres = () => async (dispatch) => {
+export const getMusicsByBand = (page) => async (dispatch) => {
   try {
 
-    const response = await axios.get(`${baseUrl}/musics/genres`, {
+    const response = await axios.get(`${baseUrl}/musics/musics-by-band?page=${page}`, {
       headers: {
-        authorization: getToken() || getTokenAdm()
+        authorization: getTokenBand() || getTokenAdm() || getTokenFreeListener() || getTokenPremiumListener()
       }
     })
-
-    dispatch(setAllGenres(response.data))
-
-  } catch (err) {
-    console.error(err.message)
-  }
-}
-
-export const getMusicsByBand = () => async (dispatch) => {
-  try {
-
-    const response = await axios.get(`${baseUrl}/musics/musics-by-band`, {
-      headers: {
-        authorization: getToken() || getTokenAdm()
-      }
-    })
-
-    console.log(response.data)
 
     dispatch(setMusicsByBand(response.data))
 
@@ -114,65 +38,92 @@ export const getMusicsByBand = () => async (dispatch) => {
   }
 }
 
-export const deleteAlbum = (id) => async (dispatch) => {
+export const searchMusics = (musicName, page) => async (dispatch) => {
   try {
 
-    await axios.delete(`${baseUrl}/musics/delete-album`, {
+    const response = await axios.get(`${baseUrl}/musics/search?music=${musicName}&page=${page}`, {
       headers: {
-        authorization: getToken() || getTokenAdm()
-      },
-      params: {
-        id
+        authorization: getTokenBand() || getTokenAdm() || getTokenFreeListener() || getTokenPremiumListener()
       }
-    })
+    });
 
-    dispatch(getAllAlbums(), getAlbumsByBand())
+    dispatch(setSearchMusics(response.data, musicName))
 
   } catch (err) {
     console.error(err.message)
   }
 }
 
-export const deleteMusic = (id) => async (dispatch) => {
+export const getAllMusics = (page) => async (dispatch) => {
   try {
-
-    await axios.delete(`${baseUrl}/musics/delete-album`, {
+    const response = await axios.get(`${baseUrl}/musics/all-musics?page=${page}`, {
       headers: {
-        authorization: getToken() || getTokenAdm()
+        authorization: getTokenBand() || getTokenAdm() || getTokenFreeListener() || getTokenPremiumListener()
       }
-    })
+    });
 
+    dispatch(setAllMusics(response.data))
 
   } catch (err) {
     console.error(err.message)
-
   }
 }
 
-const setAllGenres = (allGenres) => ({
-  type: "ALL_GENRES",
-  payload: {
-    allGenres
-  }
-})
+export const deleteMusics = (idMusics) => async (dispatch) => {
+  try {
 
-const setAllAlbums = (allAlbums) => ({
+    await axios.delete(`${baseUrl}/musics/delete-music/${idMusics}`, {
+      headers: {
+        authorization: getTokenAdm() || getTokenBand()
+      }
+    })
+
+    dispatch(getMusicsByBand())
+
+  } catch (err) {
+    console.error(err.message)
+  }
+}
+
+export const setAllAlbums = (allAlbums) => ({
   type: "ALL_ALBUMS",
   payload: {
     allAlbums
   }
 })
 
-const setAlbumsByBand = (albumsByBand) => ({
+export const setAlbumsByBand = (albumsByBand) => ({
   type: "ALBUMS_BY_BANDS",
   payload: {
     albumsByBand
   }
 })
 
-const setMusicsByBand = (musicsByBand) => ({
+export const setMusicsByBand = (musicsByBand) => ({
   type: "MUSICS_BY_BANDS",
   payload: {
     musicsByBand
+  }
+})
+
+export const setSearchMusics = (musicsData, searchedMusic) => ({
+  type: "MUSIC_SEARCH_RESULTS", 
+  payload: {
+    musicsData,
+    searchedMusic
+  }
+})
+
+export const setAllMusics = (allMusics) => ({
+  type: "ALL_MUSICS",
+  payload: {
+    allMusics
+  }
+})
+
+export const setMusicDetails = (musicDetails) => ({
+  type: "MUSIC_DETAILS",
+  payload: {
+    musicDetails
   }
 })

@@ -5,16 +5,14 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
   },
   title: {
-    display: "none",
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    width: '200px',
     cursor: 'pointer'
   },
   search: {
+    display: 'flex',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -24,33 +22,28 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    height: "35px",
+    [theme.breakpoints.up('md')]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
-      display: 'block',
+      width: '30%',
     },
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    cursor: 'pointer',
   },
   inputRoot: {
     color: 'inherit',
+    width: '90%',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '50ch',
-    },
   },
   sectionDesktop: {
     display: 'none',

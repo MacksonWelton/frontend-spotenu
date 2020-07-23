@@ -1,51 +1,80 @@
-import { Box, Button, Container, FormControl, InputLabel, LinearProgress, MenuItem, OutlinedInput, TextField } from "@material-ui/core";
+import { Box, Button, Container, FormControl, InputLabel, LinearProgress, MenuItem, OutlinedInput, TextField, Typography } from "@material-ui/core";
 import clsx from 'clsx';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMusic, getAllAlbums, getMusicsByBand, getAlbumsByBand } from "../../actions/music";
+import {getAllAlbums, getAlbumsByBand} from "../../actions/album";
+import { addMusic, getMusicsByBand, getAllMusics, deleteMusics, setMusicDetails } from "../../actions/music";
 import EnhancedTableHead from "../../components/EnhancedTableHead";
 import Header from "../../components/Header/index";
 import { useStyles } from "./style";
-import { getToken } from "../../utils/constants";
+import { getTokenBand } from "../../utils/constants";
+import { useHistory } from "react-router-dom";
+import { routes } from "../Router";
 
 
-const AddMusicsPage = () => {
+const MusicsPage = () => {
 
   const classes = useStyles();
-  const allAlbums = useSelector((state) => state.musics.allAlbums);
-  const albumsByBand = useSelector((state) => state.musics.albumsByBand);
-
-  const albums = allAlbums.length === 0 ? albumsByBand : allAlbums;
-  const musics = useSelector((state) => state.musics.musicsByBand);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const allAlbums = useSelector((state) => state.albums.allAlbums.albums);
+  const albumsByBand = useSelector((state) => state.albums.albumsByBand.albums);
+  const albums = allAlbums.length === 0 ? albumsByBand : allAlbums;
+
+  const musicsByBand = useSelector((state) => state.musics.musicsByBand.musics);
+  const numberOfRowsByBand = useSelector((state) => state.musics.musicsByBand.numberOfRows);
+
+  const allMusics = useSelector((state) => state.musics.allMusics.musics);
+  const numberOfRowsAllMusics = useSelector((state) => state.musics.allMusics.numberOfRows);
+
+  let musics = allMusics.length === 0 ? musicsByBand : allMusics;
+  let numberOfRows = numberOfRowsAllMusics === 0 ? numberOfRowsByBand : numberOfRowsAllMusics;
 
   useEffect(() => {
-    if (getToken()) {
+    if (getTokenBand()) {
       dispatch(getAlbumsByBand());
+      dispatch(getMusicsByBand());
     } else {
       dispatch(getAllAlbums());
+      dispatch(getAllMusics());
     }
-    dispatch(getMusicsByBand())
   }, [dispatch]);
 
-  
   const headCells = [
     { id: 'name', numeric: true, disablePadding: true, label: 'Nome' },
     { id: 'band', numeric: true, disablePadding: false, label: 'Banda' },
   ];
-  
-  function createData(name) {
-    return { name };
+
+  function createData(musicName, bandName, id) {
+    return { musicName, bandName, id };
   }
-  
+
+  console.log(musics)
+
+  const handleChangePageToMusicDetail = (musicDetails) => {
+    dispatch(setMusicDetails(musicDetails))
+    history.push(routes.MusicDetailsPage)
+  }
+
   const rows = musics.map(music => {
-    return createData(music.name_music)
+    return createData(
+      <Typography
+      className={classes.link}
+      key={music.id_music}
+      onClick={() => handleChangePageToMusicDetail(music)}
+    >
+      {music.name_music}
+    </Typography>, 
+      music.name, 
+      music.id_music);
   });
-  
+
   const [input, setInput] = useState({
     name: "",
     album: "",
   })
+
   const handleChangeInput = event => {
     const { name, value } = event.target;
     setInput({ ...input, [name]: value })
@@ -97,7 +126,15 @@ const AddMusicsPage = () => {
       </form>
       {
         musics ?
-          <EnhancedTableHead rows={rows} headCells={headCells} title="Músicas" />
+          <EnhancedTableHead
+            rows={rows}
+            headCells={headCells}
+            title="Músicas"
+            numberOfRows={numberOfRows}
+            changePage={allMusics.length === 0 ? getMusicsByBand : getAllMusics}
+            deleteFunction={deleteMusics}
+            addPlaylist={true}
+          />
           :
           <div className={classes.loading}>
             <LinearProgress />
@@ -110,4 +147,4 @@ const AddMusicsPage = () => {
 }
 
 
-export default AddMusicsPage;
+export default MusicsPage;

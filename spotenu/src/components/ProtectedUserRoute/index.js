@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-import { getToken, getTokenAdm } from '../../utils/constants';
+import { getTokenAdm, getTokenBand } from '../../utils/constants';
 
 export const ProtectedUserRoute = ({ component: Component, ...rest }) => {
-    const token = getToken() || getTokenAdm();
+    const token = getTokenBand() || getTokenAdm();
     const getRedirectProps = (location) => ({
         pathname: "/login",
         from: location
