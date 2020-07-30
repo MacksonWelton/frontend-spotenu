@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import PropTypes from 'prop-types';
-import { getTokenPremiumListener } from '../../utils/constants';
-import { getPlaylistsByUser, getAllPlaylists, addMusicToPlaylist } from '../../actions/playlist';
-import TablePagination from '@material-ui/core/TablePagination';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import PropTypes from "prop-types";
+import { getTokenPremiumListener, getTokenAdm } from "../../utils/constants";
+import { getPlaylistsByUser, getAllPlaylists, addMusicToPlaylist } from "../../actions/playlist";
+import TablePagination from "@material-ui/core/TablePagination";
 
 
 function ConfirmationDialogRaw(props) {
@@ -29,7 +29,7 @@ function ConfirmationDialogRaw(props) {
   useEffect(() => {
     if (getTokenPremiumListener()) {
       dispatch(getPlaylistsByUser())
-    } else {
+    } else if (getTokenAdm()) {
       dispatch(getAllPlaylists());
     }
   }, [dispatch]);
@@ -102,7 +102,7 @@ function ConfirmationDialogRaw(props) {
           onChange={handleChange}
         >
           {playlists.map((option) => (
-            <FormControlLabel value={option.id_playlist} key={option.id_playlist} control={<Radio />} label={option.name_playlist} />
+            <FormControlLabel value={option.playlist_id} key={option.playlist_id} control={<Radio />} label={option.name_playlist} />
           ))}
         </RadioGroup>
         <TablePagination

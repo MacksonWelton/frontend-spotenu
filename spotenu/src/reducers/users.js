@@ -6,7 +6,8 @@ const initialState = {
   allListeners: {
     numberOfRows: 0,
     listeners: []
-  }
+  },
+  idUser: ""
 }
 
 const users = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const users = (state = initialState, action) => {
       return {...state, allBands: action.payload.allBands};
     case "ALL_LISTENERS":
       return {...state, allListeners: action.payload.allListeners};
+    case "ID_USER":
+      return {...state, idUser: action.payload.idUser};
     default: 
     return state;
   }

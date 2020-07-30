@@ -1,26 +1,26 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import React from 'react';
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Toolbar from "@material-ui/core/Toolbar";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import React from "react";
 import { useDispatch } from "react-redux";
+import { getTokenAdm, getTokenPremiumListener } from "../../utils/constants";
 import { useStyles, useToolbarStyles } from "./style";
-import { getTokenPremiumListener, getTokenAdm } from '../../utils/constants';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -33,7 +33,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -62,25 +62,25 @@ function EnhancedTableHeadHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            inputProps={{ "aria-label": "select all desserts" }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'center' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            align={headCell.numeric ? "center" : "left"}
+            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
@@ -96,7 +96,7 @@ EnhancedTableHeadHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
@@ -107,10 +107,14 @@ const EnhancedTableHeadToolbar = (props) => {
   const classes = useToolbarStyles();
   const dispatch = useDispatch();
 
-  const { numSelected, title, selected, addPlaylist } = props;
+  const { numSelected, title, selected, addPlaylist, handleClickListItem, deleteOption } = props;
 
   const deleteItem = () => {
     dispatch(props.deleteFunction(selected));
+  }
+
+  const openPlaylists = () => {
+    handleClickListItem(selected)
   }
 
   return (
@@ -130,29 +134,41 @@ const EnhancedTableHeadToolbar = (props) => {
         )}
 
       {numSelected > 0 ?
-        (getTokenPremiumListener() || getTokenAdm()) && addPlaylist ? 
-        (
-          <>
-            <Tooltip title="Adicionar a playlist">
-              <IconButton aria-label="Adicionar a playlist" onClick={deleteItem}>
-                <PlaylistAddIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete" onClick={deleteItem}>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        )
+        (getTokenPremiumListener() || getTokenAdm()) && addPlaylist && deleteOption ?
+          (
+            <>
+              <Tooltip title="Adicionar a playlist">
+                <IconButton aria-label="Adicionar a playlist" onClick={openPlaylists}>
+                  <PlaylistAddIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete" onClick={deleteItem}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </>
+          )
           :
-        (
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete" onClick={deleteItem}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        )
+          (getTokenPremiumListener() || getTokenAdm()) && addPlaylist ?
+            (
+              <>
+                <Tooltip title="Adicionar a playlist">
+                  <IconButton aria-label="Adicionar a playlist" onClick={openPlaylists}>
+                    <PlaylistAddIcon />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )
+            :
+            (
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete" onClick={deleteItem}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+
+            )
         :
         (
           <Tooltip title="Filter list">
@@ -173,8 +189,8 @@ const EnhancedTableHead = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('name');
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -182,8 +198,8 @@ const EnhancedTableHead = (props) => {
   const { rows, headCells, title, numberOfRows, changePage, deleteFunction, addPlaylist } = props;
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -272,7 +288,7 @@ const EnhancedTableHead = (props) => {
                         <Checkbox
                           onClick={(event) => handleClick(event, row.id)}
                           checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
+                          inputProps={{ "aria-labelledby": labelId }}
                         />
                       </TableCell>
 

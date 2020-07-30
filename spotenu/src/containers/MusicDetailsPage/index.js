@@ -15,7 +15,7 @@ const MusicDetailsPage = () => {
     <Container className={classes.root} maxWidth={false}>
       <Header />
       <MusicCard
-        musicName={musicDetails.name_music}
+        musicName={musicDetails.music_name}
         bandName={musicDetails.name}
       />
     </Container>

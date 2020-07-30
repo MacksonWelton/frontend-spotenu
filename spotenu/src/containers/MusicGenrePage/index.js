@@ -1,11 +1,11 @@
-import { Container, LinearProgress } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { AddMusicGenre, getAllGenres } from "../../actions/genre";
+import { useDispatch, useSelector } from "react-redux";
+import { AddMusicGenre, getAllGenres, deleteGenre } from "../../actions/genre";
 import AddForm from "../../components/AddForm";
 import EnhancedTableHead from "../../components/EnhancedTableHead";
 import Header from "../../components/Header";
 import { useStyles } from "./style";
-import { useDispatch, useSelector } from "react-redux";
 
 const MusicGenrePage = () => {
   const classes = useStyles();
@@ -36,12 +36,12 @@ const MusicGenrePage = () => {
     { id: 'name', numeric: true, disablePadding: true, label: 'Nome' },
   ];
 
-  function createData(name) {
-    return { name };
+  function createData(name, id) {
+    return { name, id };
   }
 
   const rows = genres.map(data => {
-    return createData(data.name)
+    return createData(data.name, data.id)
   })
 
   return (
@@ -54,22 +54,15 @@ const MusicGenrePage = () => {
         name="name"
         label="Gênero"
       />
-      {
-        genres.length !== 0 ?
-          <EnhancedTableHead
-            rows={rows}
-            headCells={headCells}
-            title="Gêneros"
-            numberOfRows={numberOfRows}
-            changePage={getAllGenres}
-            addPlaylist={false}
-          />
-          :
-          <div className={classes.loading}>
-            <LinearProgress />
-            <LinearProgress color="secondary" />
-          </div>
-      }
+      <EnhancedTableHead
+        rows={rows}
+        headCells={headCells}
+        title="Gêneros"
+        numberOfRows={numberOfRows}
+        changePage={getAllGenres}
+        addPlaylist={false}
+        deleteFunction={deleteGenre}
+      />
     </Container>
   )
 }

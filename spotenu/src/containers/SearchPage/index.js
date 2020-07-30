@@ -1,13 +1,14 @@
 import { Container, LinearProgress, Typography } from "@material-ui/core";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { deleteMusics, setMusicDetails } from "../../actions/music";
 import ConfirmationDialogRaw from "../../components/ConfirmationDialogRaw";
 import Header from "../../components/Header/index";
-import Musics from "../../components/Musics";
-import { useStyles } from "./style";
-import { useHistory } from "react-router-dom";
+import MusicsSearchResults from "../../components/MusicsSearchResults";
+import { getTokenAdm, getTokenPremiumListener } from "../../utils/constants";
 import { routes } from "../Router";
+import { useStyles } from "./style";
 
 const SearchPage = () => {
 
@@ -39,12 +40,12 @@ const SearchPage = () => {
     return createData(
       <Typography
         className={classes.link}
-        key={music.id_music}
+        key={music.music_id}
         onClick={() => handleChangePageToMusicDetail(music)}
       >
-        {music.name_music}
+        {music.music_name}
       </Typography>,
-      music.id_music
+      music.music_id
     )
   });
 
@@ -68,7 +69,7 @@ const SearchPage = () => {
       {
         musics ?
           <>
-            <Musics
+            <MusicsSearchResults
               rows={rows}
               headCells={headCells}
               title={`Resultado da pesquisa para: ${searchedMusic}`}
@@ -77,6 +78,7 @@ const SearchPage = () => {
               deleteFunction={deleteMusics}
               addPlaylist={true}
               handleClickListItem={handleClickListItem}
+              checkBox={getTokenPremiumListener() || getTokenAdm()}
             />
             <ConfirmationDialogRaw
               classes={{

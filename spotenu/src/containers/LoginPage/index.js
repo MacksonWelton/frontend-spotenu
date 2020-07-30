@@ -6,10 +6,11 @@ import { login } from '../../actions/user';
 import Header from "../../components/Header/index";
 import LoginPageSignupButtons from "../../components/LoginPageSignupButtons";
 import { useStyles } from "./style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { routes } from "../Router";
 import { getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from "../../utils/constants";
+import Alerts from "../../components/Alerts";
 
 function Login() {
 
@@ -27,6 +28,8 @@ function Login() {
     password: '',
     showPassword: false,
   });
+
+  const alert = useSelector((state) => state.alerts.alert);
 
   const handleChangeInput = event => {
     const { name, value } = event.target;
@@ -110,6 +113,7 @@ function Login() {
         </Box>
       </form>
       <LoginPageSignupButtons />
+      <Alerts open={alert.open} type={alert.type} message={alert.message}/>
     </Container>
   )
 

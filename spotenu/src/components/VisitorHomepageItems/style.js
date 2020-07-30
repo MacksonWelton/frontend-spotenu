@@ -17,7 +17,6 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     width: "100%",
-    justifyContent: "space-around",
   },
   gridItemUsers: {
     width: "100%",
@@ -25,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "flex-end",
     [theme.breakpoints.up('md')]: {
-      width: '49%',
+      width: '50%',
     },
   },
   gridItemBand: {
@@ -37,7 +36,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   contentGridItem: {
     width: "100%",
+    display: "inline-flex",
+    flexDirection: "column",
     backgroundColor: "black",
+    gap: "10px",
     opacity: "0.8",
     padding: "20px",
   },
@@ -69,13 +71,10 @@ export const useStyles = makeStyles((theme) => ({
     },
     loginButton: {
       width: "200px",
-      marginBottom: "10px"
     },
     boxButtons: {
       display: "flex",
-      justifyContent: "space-around",
-      margin: "10px 0px",
-      flexWrap: 'wrap'
+      justifyContent: "center",
     },
     signupButton: {
       width: "200px"

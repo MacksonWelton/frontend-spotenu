@@ -5,25 +5,21 @@ import { useHistory } from "react-router-dom";
 import { routes } from "../../containers/Router";
 import { useStyles } from "./style";
 
-const AdmHomePageItems = () => {
+const PremiumListenerHomepageItems = () => {
 
   const classes = useStyles();
   const history = useHistory();
 
-  const goToMusicGenrePage = () => {
-    history.push(routes.MusicGenrePage)
+  const goToCollaborativePlaylists = () => {
+    history.push(routes.CollaborativePlaylists)
   }
 
-  const goToAllBandsPage = () => {
-    history.push(routes.AllBandsPage)
+  const goToMusicsPage = () => {
+    history.push(routes.MusicsPage)
   }
 
-  const goToAdmSignupPage = () => {
-    history.push(routes.AdmSignupPage)
-  }
-
-  const goToListenerPage = () => {
-    history.push(routes.AllListenersPage)
+  const goToPlaylistsPage = () => {
+    history.push(routes.PlaylistsPage)
   }
 
   return (
@@ -33,11 +29,11 @@ const AdmHomePageItems = () => {
           <div className={classes.contentGridItem}>
             <Box className={classes.boxButtons}>
               <Button
-                onClick={goToAllBandsPage}
+                onClick={goToMusicsPage}
                 variant="contained"
                 color="primary"
                 type="submit">
-                Aprovar Bandas
+                Todas as Músicas
               </Button>
             </Box>
           </div>
@@ -46,11 +42,11 @@ const AdmHomePageItems = () => {
           <div className={classes.contentGridItem}>
             <Box className={classes.boxButtons}>
               <Button
-                onClick={goToAdmSignupPage}
+                onClick={goToPlaylistsPage}
                 variant="contained"
                 color="primary"
                 type="submit">
-                Adicionar Administrador
+                Minhas Playlists
               </Button>
             </Box>
           </div>
@@ -59,24 +55,11 @@ const AdmHomePageItems = () => {
           <div className={classes.contentGridItem}>
             <Box className={classes.boxButtons}>
               <Button
-                onClick={goToMusicGenrePage}
+                onClick={goToCollaborativePlaylists}
                 variant="contained"
                 color="primary"
                 type="submit">
-                Adicionar Gênero
-              </Button>
-            </Box>
-          </div>
-        </Grid>
-        <Grid className={clsx(classes.gridItemUsers)} item>
-          <div className={classes.contentGridItem}>
-            <Box className={classes.boxButtons}>
-              <Button
-                onClick={goToListenerPage}
-                variant="contained"
-                color="primary"
-                type="submit">
-                Gerenciar Ouvintes
+                Playlists Colaborativas
               </Button>
             </Box>
           </div>
@@ -84,6 +67,7 @@ const AdmHomePageItems = () => {
       </Grid>
     </div>
   )
+
 }
 
-export default AdmHomePageItems;
+export default PremiumListenerHomepageItems;
