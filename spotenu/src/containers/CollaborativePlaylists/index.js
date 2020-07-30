@@ -31,7 +31,7 @@ const CollaborativePlaylists = () => {
 
   const rows = playlists.map(playlist => {
     return createData(
-      playlist.name_playlist
+      playlist.playlist_name
       ,
       <Button onClick={() => handleFollowCollaborativePlaylist(playlist.playlist_id)} color="primary">
         Seguir

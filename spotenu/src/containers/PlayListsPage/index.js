@@ -138,7 +138,7 @@ const PlaylistsPage = () => {
         key={playlist.playlist_id}
         onClick={() => handleChangePageToPlaylistMusics(playlist.playlist_id)}
       >
-        {playlist.name_playlist}
+        {playlist.playlist_name}
       </Typography>
       ,
       editButton &&
