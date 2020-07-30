@@ -1,18 +1,22 @@
 import axios from "axios";
 import { baseUrl, getTokenAdm, getTokenBand } from "../utils/constants";
+import { alert } from "./alert";
 
 export const AddAlbum = (input) => async (dispatch) => {
   try {
-    await axios.post(`${baseUrl}/albums/create-album`, input, {
+    const response = await axios.post(`${baseUrl}/albums/create-album`, input, {
       headers: {
         authorization: getTokenBand() || getTokenAdm()
       }
     });
 
+    dispatch(alert("success", response.data, true));
+
     dispatch(getAllAlbums());
 
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
@@ -25,10 +29,11 @@ export const getAllAlbums = (page) => async (dispatch) => {
       }
     })
 
-    dispatch(setAllAlbums(response.data))
+    dispatch(setAllAlbums(response.data));
 
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
@@ -41,29 +46,76 @@ export const getAlbumsByBand = (page) => async (dispatch) => {
       }
     })
 
-    dispatch(setAlbumsByBand(response.data))
+    dispatch(setAlbumsByBand(response.data));
 
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
-export const deleteAlbum = (id) => async (dispatch) => {
+export const editAlbumName = (albumId, name) => async (dispatch) => {
+  try {
+    const response = await axios.put(`${baseUrl}/albums/edit-album-name`, { albumId, name }, {
+      headers: {
+        authorization: getTokenBand() || getTokenAdm()
+      }
+    });
+
+    if (getTokenBand()) {
+      dispatch(getAlbumsByBand());
+    } else {
+      dispatch(getAllAlbums());
+    }
+
+    dispatch(alert("success", response.data, true));
+
+  } catch (err) {
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
+  }
+}
+
+export const editAlbumGenres = (albumId, genresId) => async (dispatch) => {
+  try {
+    const response = await axios.put(`${baseUrl}/albums/edit-album-genres`, { albumId, genresId }, {
+      headers: {
+        authorization: getTokenBand() || getTokenAdm()
+      }
+    });
+
+    if (getTokenBand()) {
+      dispatch(getAlbumsByBand());
+    } else {
+      dispatch(getAllAlbums());
+    }
+
+    dispatch(alert("success", response.data, true));
+  } catch (err) {
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
+  }
+}
+
+export const deleteAlbum = (albumId) => async (dispatch) => {
   try {
 
-    await axios.delete(`${baseUrl}/albums/delete-album/${id}`, {
+    const response = await axios.delete(`${baseUrl}/albums/delete-album/${albumId}`, {
       headers: {
         authorization: getTokenBand() || getTokenAdm()
       }
     })
 
     if (getTokenBand()) {
-      dispatch(getAlbumsByBand())
+      dispatch(getAlbumsByBand());
     } else {
-      dispatch(getAllAlbums())
+      dispatch(getAllAlbums());
     }
+
+    dispatch(alert("success", response.data, true));
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 

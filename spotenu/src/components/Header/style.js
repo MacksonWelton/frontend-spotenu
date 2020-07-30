@@ -2,10 +2,19 @@ import { fade, makeStyles} from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   grow: {
-    flexGrow: 1,
+    grow: 1,
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   menuButton: {
     marginRight: theme.spacing(0),
+  },
+  menuLogoSearch: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
   },
   title: {
     width: '200px',
@@ -49,6 +58,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
+      justifyContent: 'flex-end',
     },
   },
   sectionMobile: {

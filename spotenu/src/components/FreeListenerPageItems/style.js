@@ -3,13 +3,12 @@ import { makeStyles } from "@material-ui/core";
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    padding: 0,
+    margin: 0,
   },
   div: {
     width: "100%",
-    padding: "60px 0px",
-    [theme.breakpoints.up('md')]: {
-      padding: "0px",
-    }
+    padding: 0,
   },
   gridContainer: {
     display: "flex",
@@ -36,18 +35,11 @@ export const useStyles = makeStyles((theme) => ({
     opacity: "0.8",
     padding: "20px",
   },
-  loginButton: {
-    width: "200px",
-    marginBottom: "10px"
-  },
   boxButtons: {
     display: "flex",
     justifyContent: "space-around",
     margin: "10px 0px",
     flexWrap: 'wrap'
-  },
-  signupButton: {
-    width: "200px"
   }
 }
 ));

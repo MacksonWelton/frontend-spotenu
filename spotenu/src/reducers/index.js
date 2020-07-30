@@ -5,6 +5,7 @@ import musics from "./musics";
 import playlists from "./playlists";
 import genres from "./genres";
 import albums from "./albums";
+import alerts from "./alerts";
 
 export const generateReducers = history =>
   combineReducers({
@@ -13,5 +14,6 @@ export const generateReducers = history =>
     musics,
     playlists,
     genres,
-    albums
+    albums,
+    alerts,
   });

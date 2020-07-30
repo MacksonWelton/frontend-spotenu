@@ -1,9 +1,9 @@
 import axios from "axios";
 import { baseUrl, getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from "../utils/constants";
+import { alert } from "./alert";
 
 export const addMusic = (input) => async (dispatch) => {
   try {
-
     await axios.post(`${baseUrl}/musics/add-music`, input, {
       headers: {
         authorization: getTokenBand()
@@ -11,30 +11,29 @@ export const addMusic = (input) => async (dispatch) => {
     })
 
     if (getTokenBand()) {
-      dispatch(getMusicsByBand())
+      dispatch(getMusicsByBand());
     } else {
-      dispatch(getAllMusics())
+      dispatch(getAllMusics());
     }
-
-
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
 export const getMusicsByBand = (page) => async (dispatch) => {
   try {
-
     const response = await axios.get(`${baseUrl}/musics/musics-by-band?page=${page}`, {
       headers: {
         authorization: getTokenBand() || getTokenAdm() || getTokenFreeListener() || getTokenPremiumListener()
       }
-    })
+    });
 
     dispatch(setMusicsByBand(response.data))
 
   } catch (err) {
-
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
@@ -51,6 +50,7 @@ export const searchMusics = (musicName, page) => async (dispatch) => {
 
   } catch (err) {
     console.error(err.message)
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
@@ -65,23 +65,49 @@ export const getAllMusics = (page) => async (dispatch) => {
     dispatch(setAllMusics(response.data))
 
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 
-export const deleteMusics = (idMusics) => async (dispatch) => {
+export const editMusicName = (musicName, musicId) => async (dispatch) => {
+  try {
+    const response = await axios.put(`${baseUrl}/musics/edit-music-name`, {musicName, musicId}, {
+      headers: {
+        authorization: getTokenAdm() || getTokenBand()
+      }
+    });
+
+    dispatch(alert("success", response.data, true));
+
+    dispatch(getAllMusics());
+
+    dispatch(getMusicsByBand());
+
+  } catch (err) {
+    console.error(err.message);
+    dispatch(alert("error", err.response.data))
+  }
+}
+
+export const deleteMusics = (musicsId) => async (dispatch) => {
   try {
 
-    await axios.delete(`${baseUrl}/musics/delete-music/${idMusics}`, {
+    await axios.delete(`${baseUrl}/musics/delete-music/${musicsId}`, {
       headers: {
         authorization: getTokenAdm() || getTokenBand()
       }
     })
 
-    dispatch(getMusicsByBand())
+    if (getTokenBand()) {
+      dispatch(getMusicsByBand())
+    } else {
+      dispatch(getTokenAdm())
+    }
 
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
+    dispatch(alert("error", err.response.data.message, true));
   }
 }
 

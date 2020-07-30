@@ -1,31 +1,31 @@
-import { Button } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
+import { Button } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
+import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
-import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
-import SearchIcon from '@material-ui/icons/Search';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import TocIcon from "@material-ui/icons/Toc";
+import ListAltOutlinedIcon from "@material-ui/icons/ListAltOutlined";
+import MenuIcon from "@material-ui/icons/Menu";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import MusicNoteOutlinedIcon from "@material-ui/icons/MusicNoteOutlined";
+import SearchIcon from "@material-ui/icons/Search";
 import clsx from "clsx";
-import React from 'react';
+import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
-import { searchMusics } from '../../actions/music';
+import { useHistory } from "react-router-dom";
+import { searchMusics } from "../../actions/music";
 import { routes } from "../../containers/Router";
-import { getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from '../../utils/constants';
+import { getTokenAdm, getTokenBand, getTokenFreeListener, getTokenPremiumListener } from "../../utils/constants";
 import { useStyles } from "./style";
 
 
@@ -38,32 +38,35 @@ const Header = () => {
     history.push(routes.HomePage);
   }
 
-  function goToLoginPage() {
-    history.push(routes.LoginPage);
-  }
-
-  function goToMusicPage() {
-    history.push(routes.MusicsPage);
-  }
-
-  function goToMusicGenrePage() {
-    history.push(routes.MusicGenrePage);
-  }
-
-  function goToAlbumsPage() {
-    history.push(routes.AlbumsPage);
-  }
-
-  function goToAllBandsPage() {
-    history.push(routes.AllBandsPage);
-  }
-
-  function goToPlaylistsPage() {
-    history.push(routes.PlaylistsPage);
-  }
-
-  function goToAllListenersPage() {
-    history.push(routes.AllListenersPage);
+  const goToPage = (page) => {
+    switch (page) {
+      case "login":
+        history.push(routes.LoginPage)
+        break;
+      case "musics":
+        history.push(routes.MusicsPage)
+        break;
+      case "music-genre":
+        history.push(routes.MusicGenrePage)
+        break;
+      case "albums":
+        history.push(routes.AlbumsPage)
+        break;
+      case "bands":
+        history.push(routes.AllBandsPage)
+        break;
+      case "playlists":
+        history.push(routes.PlaylistsPage)
+        break;
+      case "all-listeners":
+        history.push(routes.AllListenersPage)
+        break;
+      case "collaborative-playlists":
+        history.push(routes.CollaborativePlaylists)
+        break;
+      default:
+        return;
+    }
   }
 
   const classes = useStyles();
@@ -129,22 +132,74 @@ const Header = () => {
     }
   }
 
-  const menuId = 'primary-search-account-menu';
+  const goToEditUserPage = () => {
+    history.push(routes.EditUserPage)
+  }
+
+  const menuId = "primary-search-account-menu";
   const renderUserMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isUserMenuOpen}
       onClose={handleUserMenuClose}
     >
       <div>
+        <MenuItem onClick={goToEditUserPage}>Editar Perfil</MenuItem>
         <MenuItem onClick={logoff}>Sair</MenuItem>
       </div>
     </Menu>
   );
+
+  const listMenu = getTokenPremiumListener() ?
+    [
+      {
+        title: "Todas as Músicas",
+        page: () => {goToPage("musics")}
+      },
+      {
+        title: "Minhas Playlits",
+        page: () => {goToPage("playlists")}
+      },
+      {
+        title: "Playlists Colaborativas",
+        page: () => {goToPage("collaborative-playlists")}
+      }
+    ] :
+    getTokenBand() ?
+      [
+        {
+          title: "Minhas Músicas",
+          page: () => {goToPage("musics")}
+        },
+        {
+          title: "Meus Álbums",
+          page: () => {goToPage("albums")}
+        }
+      ] :
+      getTokenAdm() ?
+        [
+          {
+            title: "Todas as Músicas",
+            page: () => {goToPage("musics")}
+          },
+          {
+            title: "Todos os Álbums",
+            page: () => {goToPage("albums")}
+          },
+          {
+            title: "Minhas Playlits",
+            page: () => {goToPage("playlists")}
+          },
+          {
+            title: "Playlists Colaborativas",
+            page: () => {goToPage("playlists")}
+          }
+        ] :
+        [];
 
   const renderResourceMenu = anchor => (
     <div
@@ -156,40 +211,15 @@ const Header = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[
-          {
-            title: "Músicas",
-            page: goToMusicPage
-          },
-          {
-            title: "Álbums",
-            page: goToAlbumsPage
-          },
-          {
-            title: "Playlits",
-            page: goToPlaylistsPage
-          }
-        ].map((text) => {
-          if (text.title !== "Adicionar Playlits") {
-            return (
-              <ListItem button key={text.title} onClick={text.page}>
-                <ListItemIcon>
-                  <AddCircleOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary={text.title} />
-              </ListItem>
-            )
-          } else if ((getTokenPremiumListener() || getTokenAdm()) && text.title === "Adicionar Playlits") {
-            return (
-              <ListItem button key={text.title} onClick={text.page}>
-                <ListItemIcon>
-                  <AddCircleOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary={text.title} />
-              </ListItem>
-            )
-          }
-          return <div key={text.title}></div>;
+        {listMenu.map((text) => {
+          return (
+            <ListItem button key={text.title} onClick={text.page}>
+              <ListItemIcon>
+                <TocIcon />
+              </ListItemIcon>
+              <ListItemText primary={text.title} />
+            </ListItem>
+          )
         })}
       </List>
       <Divider />
@@ -197,15 +227,15 @@ const Header = () => {
         <List>
           {[{
             title: "Aprovar Bandas",
-            page: goToAllBandsPage
+            page: () => {goToPage("bands")}
           },
           {
             title: "Adicionar Gênero",
-            page: goToMusicGenrePage
+            page: () => {goToPage("music-genre")}
           },
           {
             title: "Gerenciar Ouvintes",
-            page: goToAllListenersPage
+            page: () => {goToPage("all-listeners")}
           }
           ].map((text) => (
             <ListItem button key={text.title} onClick={text.page}>
@@ -220,65 +250,67 @@ const Header = () => {
     </div>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileUserMenuOpen}
       onClose={handleMobileMenuClose}
     >
       <div>
+        <MenuItem onClick={goToEditUserPage}>Editar Perfil</MenuItem>
         <MenuItem onClick={logoff}>Sair</MenuItem>
       </div>
     </Menu>
   );
 
   return (
-    <div className={classes.grow}>
+    <div>
       <AppBar position="static">
-        <Toolbar>
-          {
-            page && (
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer("left", true)}
-              >
-                <MenuIcon />
-              </IconButton>
-            )
-          }
-          <Typography onClick={handleClick} className={classes.title} variant="h6" noWrap>
-            Spotenu
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.menuLogoSearch}>
+            {
+              page && !getTokenFreeListener() && (
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer("left", true)}
+                >
+                  <MenuIcon />
+                </IconButton>
+              )
+            }
+            <Typography onClick={handleClick} className={classes.title} variant="h6" noWrap>
+              Spotenu
             <MusicNoteOutlinedIcon />
-          </Typography>
-          {
-            page && (
-              <div className={classes.search}>
-                <InputBase
-                  type="text"
-                  value={input}
-                  onChange={handleInput}
-                  onKeyDown={handleSearch}
-                  placeholder="Pesquisar…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-                <div className={classes.searchIcon} onClick={(event) => handleSearch(event, true)}>
-                  <SearchIcon/>
+            </Typography>
+            {
+              page && (
+                <div className={classes.search}>
+                  <InputBase
+                    type="text"
+                    value={input}
+                    onChange={handleInput}
+                    onKeyDown={handleSearch}
+                    placeholder="Pesquisar…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                  <div className={classes.searchIcon} onClick={(event) => handleSearch(event, true)}>
+                    <SearchIcon />
+                  </div>
                 </div>
-              </div>
-            )}
-
+              )}
+          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {
@@ -294,7 +326,7 @@ const Header = () => {
                   <AccountCircle />
                 </IconButton>
               ) : (
-                  <Button onClick={goToLoginPage} variant="contained" color="secondary">Entrar</Button>
+                  <Button onClick={() => goToPage("login")} variant="contained" color="secondary">Entrar</Button>
                 )
             }
           </div>
@@ -311,7 +343,7 @@ const Header = () => {
                   <MoreIcon />
                 </IconButton>
               ) : (
-                  <Button onClick={goToLoginPage} variant="contained" color="secondary">Entrar</Button>
+                  <Button onClick={() => goToPage("login")} variant="contained" color="secondary">Entrar</Button>
                 )
             }
           </div>

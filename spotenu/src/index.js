@@ -1,19 +1,17 @@
-import {
-  createGenerateClassName,
-  CssBaseline, jssPreset, MuiThemeProvider
-} from "@material-ui/core";
-import { routerMiddleware } from "connected-react-router";
-import { create } from "jss";
+import {CssBaseline, MuiThemeProvider, createGenerateClassName, jssPreset}
+    from "@material-ui/core";
+import {routerMiddleware} from "connected-react-router";
+import {createBrowserHistory} from 'history';
+import {create} from "jss";
 import React from "react";
 import ReactDOM from "react-dom";
-import {createBrowserHistory} from 'history';
-import { JssProvider } from "react-jss";
-import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import { CustomRouter } from "./containers/Router";
-import { generateReducers } from "./reducers";
-import theme from "./style/theme";
+import {JssProvider} from "react-jss";
+import {Provider} from "react-redux";
+import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
+import {CustomRouter} from "./containers/Router";
+import {generateReducers} from "./reducers";
+import theme from "./style/theme";
 
 const history = createBrowserHistory();
 
