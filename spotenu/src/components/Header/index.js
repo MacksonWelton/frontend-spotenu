@@ -196,7 +196,7 @@ const Header = () => {
           },
           {
             title: "Playlists Colaborativas",
-            page: () => {goToPage("playlists")}
+            page: () => {goToPage("collaborative-playlists")}
           }
         ] :
         [];

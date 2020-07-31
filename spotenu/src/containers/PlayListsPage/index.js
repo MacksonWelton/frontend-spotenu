@@ -198,7 +198,7 @@ const PlaylistsPage = () => {
       <EnhancedTableHead
         rows={rows}
         headCells={headCells}
-        title="Playlists"
+        title="Minhas Playlists"
         numberOfRows={numberOfRows}
         changePage={getAllPlaylists}
         addPlaylist={false}
