@@ -5,7 +5,7 @@
 </p>
 
 ## Stack
-Este é um projeto Full-stack Mobile First  fei utilizando HTML, CSS, JavaScript, React.js, Styled-Components, Material-UI, PropTypes, Axios e como gerenciador de pacotes do NodeJS o npm.
+Este é o Front-end  de um projeto Web Full-stack Mobile First  fei utilizando HTML, CSS, JavaScript, React.js, Styled-Components, Material-UI, PropTypes, Axios e como gerenciador de pacotes do NodeJS o npm.
 
 Os principais arquivos da aplicação foram divididos em duas grandes pastas chamadas Containers e Components, na pasta Components foram armazenas elementos como header, listas entre outros com a finalidade de serem reutilizados e na pasta Containers arquivos montados com os elementos da pasta componentes e elementos únicos que juntos formam uma interface completa.
 
