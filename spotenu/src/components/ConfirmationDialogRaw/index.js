@@ -102,7 +102,7 @@ function ConfirmationDialogRaw(props) {
           onChange={handleChange}
         >
           {playlists.map((option) => (
-            <FormControlLabel value={option.playlist_id} key={option.playlist_id} control={<Radio />} label={option.name_playlist} />
+            <FormControlLabel value={option.playlist_id} key={option.playlist_id} control={<Radio />} label={option.playlist_name} />
           ))}
         </RadioGroup>
         <TablePagination

@@ -22,7 +22,7 @@ const AllBandsPage = () => {
     { id: 'name', numeric: true, disablePadding: true, label: 'Nome' },
     { id: 'nickname', numeric: true, disablePadding: false, label: 'Apelido' },
     { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-    { id: 'approve', numeric: true, disablePadding: false, label: 'Aprovar/Banir' }
+    { id: 'approveBand', numeric: true, disablePadding: false, label: 'Aprovar/Banir' }
   ];
 
   function showAllBands(name, nickname, email, button, id) {
@@ -36,7 +36,7 @@ const AllBandsPage = () => {
       data.email,
       !data.is_approved ?
         <Button variant="contained" color="primary" onClick={() => dispatch(approveBands(data.id))}>Aprovar</Button> :
-        <Button variant="contained" color="primary" onClick={() => dispatch(approveBands(data.id, false))}>Reprovar</Button>,
+        <Button variant="contained" color="primary" onClick={() => dispatch(approveBands(data.id, false))}>Banir</Button>,
         data.id
     );
   });

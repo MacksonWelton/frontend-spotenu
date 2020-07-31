@@ -138,7 +138,7 @@ const PlaylistsPage = () => {
         key={playlist.playlist_id}
         onClick={() => handleChangePageToPlaylistMusics(playlist.playlist_id)}
       >
-        {playlist.name_playlist}
+        {playlist.playlist_name}
       </Typography>
       ,
       editButton &&
@@ -198,7 +198,7 @@ const PlaylistsPage = () => {
       <EnhancedTableHead
         rows={rows}
         headCells={headCells}
-        title="Playlists"
+        title="Minhas Playlists"
         numberOfRows={numberOfRows}
         changePage={getAllPlaylists}
         addPlaylist={false}
