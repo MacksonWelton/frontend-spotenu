@@ -1,5 +1,9 @@
 # Frontend-spotenu
 
+<p align="center">
+  <img  height='600' src='https://user-images.githubusercontent.com/24879021/88987405-372b1680-d2ac-11ea-8023-d3d8e55dd53d.png'>
+</p>
+
 ## Stack
 Este é um projeto Full-stack Mobile First  fei utilizando HTML, CSS, JavaScript, React.js, Styled-Components, Material-UI, PropTypes, Axios e como gerenciador de pacotes do NodeJS o npm.
 
