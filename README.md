@@ -9,6 +9,8 @@ Este é um projeto Full-stack Mobile First  fei utilizando HTML, CSS, JavaScript
 
 Os principais arquivos da aplicação foram divididos em duas grandes pastas chamadas Containers e Components, na pasta Components foram armazenas elementos como header, listas entre outros com a finalidade de serem reutilizados e na pasta Containers arquivos montados com os elementos da pasta componentes e elementos únicos que juntos formam uma interface completa.
 
+[Veja o repositório do Back-end desta aplicação](https://github.com/MacksonWelton/backend-spotenu)
+
 ## Sobre
 
 Esse é um dos projetos que foi desenvolvido durante o curso de desenvolvimento web full stack da Labenu e ele consiste em uma aplicação de música na qual é possível se cadastrar como ouvinte gratuito, pagante ou banda e ter acesso a recursos, como ouvir músicas, pesquisar músicas, criar playlists e torná-las colaborativas, criar albums, adicionar gêneros musicais e muito mais.
